@@ -1,0 +1,114 @@
+/* :P */
+
+* {transition: rotate 5s linear;}
+
+/* Elements */
+
+body {
+  margin: auto;
+  margin-top: 1em;
+  width: 70%;
+  background-color: rgb(224, 160, 244);
+  background-image: linear-gradient(135deg, rgb(224, 192, 255), rgb(224, 128, 244)),
+                    linear-gradient(90deg, rgb(224, 192, 255), rgb(224, 128, 244));
+  background-position: 0vw 0vw, 100vw 50vw;
+  background-size: 100vw 100vw, 200vw 100vw;
+  background-repeat: no-repeat, repeat;
+}
+
+h1 {text-align: center;}
+
+p {text-indent: 2rem; font-size: 1.125rem}
+
+a {color: rgb(0, 96, 0);}
+a:hover {color: rgb(0, 128, 0);}
+
+img {
+  image-rendering: auto;
+  image-rendering: pixelated;
+}
+
+/* Navigation */
+
+.navigation {text-align: center;}
+
+.nav, .navArrow {
+  background-color: rgb(128, 208, 128);
+  color: rgb(0, 0, 0);
+  padding: 0.25em;
+  margin: 0.1em;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1.5em;
+  cursor: pointer;
+  border-radius: 0.25em;
+}
+
+a.nav:hover, a.nav:active, a.navArrow:hover, a.navArrow:active {
+  background-color: rgb(128, 192, 128);
+  color: rgb(0, 0, 0);
+}
+
+.navArrow {
+  font-family: Consolas;
+  width: 1em;
+  height: 1em;
+  line-height: 1em;
+}
+
+div.navArrow {
+  background-color: rgb(160, 192, 160);
+  color: rgb(128, 128, 128);
+  cursor: not-allowed;
+}
+
+.sectBttn {
+  text-align: center;
+  line-height: 2em;
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.sect {
+  position: relative;
+  overflow-y: hidden;
+  transition: max-height 1s;
+}
+
+/* Animated Button */
+
+.imgButton {
+  border: 0;
+  padding: 0;
+  height: 8rem;
+  cursor: grab;
+}
+
+/* Media */
+
+@media (max-width: 600px) {
+  body {
+    width: 80%;
+  }
+}
+
+/* Load Animation */
+
+@keyframes load {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Other */
+
+.WC {
+  text-align: center;
+  color: rgb(96, 96, 96);
+}

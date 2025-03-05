@@ -1,0 +1,131 @@
+<!--Start-->
+
+<!DOCTYPE html>
+<html lang = "en-US">
+
+<head>
+<!--End-->
+  <title>Repository</title>
+<!--Start-->
+  <meta charset = "utf-8">
+  <meta name = "viewport" content = "width=device-width">
+  <link href = "../../../static/global/mainStyle.css" rel = "stylesheet" type = "text/css" />
+  <link href = "../../../static/repositoryInterface/mainStyle.css" rel = "stylesheet" type = "text/css" />
+  <link href = "../../../static/repositoryInterface/icon.png" rel = "icon">
+</head>
+
+<!--End-->
+
+<body style="background-color: rgb(224, 160, 244);">
+  
+<!--Start-->
+  
+  <div id="link" style="text-align: center; font-size: 1.5em; background: rgb(255, 128, 128); position: fixed; width: 25%; right: 1em; bottom: 1em; font-weight: bold;">
+    Java Script does not seem to be linked. Most features and some content may be missing.
+  </div>
+  
+  <script src="../../../static/global/areFilesLinked.js"></script>
+  
+  <script src="../../../static/repositoryInterface/main.js"></script>
+  <script src="../../../static/global/main.js"></script>
+  
+<!--End-->
+  
+  <h1>Repository Interface</h1>
+  
+  <a href="../">Home</a>
+  
+  <h2>Index File (JSON)</h2>
+  
+  <form id="fileForm">
+    <input type="file" id="fileInp" name="fileInp"><br>
+    <input type="submit" accept="application/json" value="Submit"><br>
+    <output id="fileOut">... Awaiting Input</output>
+  </form>
+  
+  <p style="text-indent: 0;">
+    
+    JSON Structure:<br><br>
+    
+    [<br>
+    {"src":"<i>src</i>", "page":"<i>host/artist page</i>", "date":"<i>yyyy-mm-dd</i>", "tags":["src:<i>web/path</i>", "artist:<i>artist</i>", ...]}<br>
+    ]
+    
+  </p>
+  
+  <h2>Link to Storage (WIP)</h2>
+  
+  <h2>Search</h2>
+  
+  <p style="text-indent: 0;">
+    
+    Seperate Tags with spaces<br><br>
+    
+    Include: Add objects from allSet (from file) to outputSet with any tag, and within date<br>
+    Exclude: Remove objects from outputSet with any tag, or within date<br>
+    Filter: Remove objects from outputSet without all tags, or outside date<br><br>
+    
+    Note: outpoutSet will retain objects after file change, allSet resets when a different file is loaded.
+    
+  </p>
+  
+  <ul>
+    <li>"any:" = any</li>
+    <li>"none:" = none</li>
+    <li>"src:web" = Source type web</li>
+    <li>"src:path" = Source type path</li>
+    <li>"art:<i>artist</i>"</li>
+  </ul>
+  
+  <form id="searchForm">
+    
+    <label>Date Restriction (Exclusive)</label><br>
+    <input type="checkbox" id="beforeCheck" name="beforeCheck">
+    <label for="beforeInp" style="display: inline-block; width: 3em;">Before:</label>
+    <input type="date" id="beforeInp" name="beforeInp"><br>
+    <input type="checkbox" id="afterCheck" name="afterCheck">
+    <label for="afterInp" style="display: inline-block; width: 3em;">After:</label>
+    <input type="date" id="afterInp" name="afterInp"><br><br>
+    
+    <label>Tag Function</label><br>
+    <input type="radio" id="inc" name="func" checked="true">
+    <label for="inc">Include</label><br>
+    <input type="radio" id="exc" name="func">
+    <label for="exc">Exclude</label><br>
+    <input type="radio" id="flt" name="func">
+    <label for="flt">Filter</label><br><br>
+    
+    <label>Tags</label><br>
+    <input type="search" id="tagsSearch" style="width:15em"><br><br>
+    
+    <input type="submit" value="Apply" style="margin-left: 1em; margin-right: 1em;">
+    <input type="reset" value="Reset" style="margin-left: 1em; margin-right: 1em;"><br><br>
+    
+    <output id="searchOut">... Awaiting Input</output>
+    
+  </form>
+  
+  <h2>Result</h2>
+  
+  <p style="text-indent: 0;" id="resultsQuant">Results: 0</p>
+  
+  <button onclick="outputList();" style="margin-left: 1em; margin-right: 1em;">Output List</button>
+  <button onclick="clearList();" style="margin-left: 1em; margin-right: 1em;">Clear Output</button><br>
+  
+  <ul id="list">
+    
+  </ul>
+  
+  <img id="display" style="width: 50%;"><br><br>
+    
+</img>
+  
+</body>
+
+<!--Start-->
+
+</html>
+
+<!--End-->
+
+<!--Hello!-->
