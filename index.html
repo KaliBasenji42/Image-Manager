@@ -1,23 +1,15 @@
-<!--Start-->
-
 <!DOCTYPE html>
 <html lang = "en-US">
 
 <head>
-<!--End-->
   <title>Image Manager</title>
-<!--Start-->
   <meta charset = "utf-8">
   <meta name = "viewport" content = "width=device-width">
   <link href = "assets/mainStyle.css" rel = "stylesheet" type = "text/css" />
   <link href = "assets/icon.png" rel = "icon">
 </head>
 
-<!--End-->
-
-<body style="background-color: rgb(224, 160, 244);">
-  
-<!--Start-->
+<body>
   
   <div id="link" style="text-align: center; font-size: 1.5em; background: rgb(255, 128, 128); position: fixed; width: 25%; right: 1em; bottom: 1em; font-weight: bold;">
     Java Script does not seem to be linked. Most features and some content may be missing.
@@ -25,8 +17,6 @@
   
   <script src="assets/areFilesLinked.js"></script>
   <script src="assets/main.js"></script>
-  
-<!--End-->
   
   <h1>Image Manager</h1>
   
@@ -38,7 +28,7 @@
     <output id="fileOut">... Awaiting Input</output>
   </form>
   
-  <p style="text-indent: 0;">
+  <p>
     
     JSON Structure:<br><br>
     
@@ -48,11 +38,39 @@
     
   </p>
   
-  <h2>Link to Storage (WIP)</h2>
+  <h2>Input</h2>
   
-  <h2>Search</h2>
+  <h3>Folder Path</h3>
   
-  <p style="text-indent: 0;">
+  <form id="pathForm">
+    
+    <label>Path relative to this file</label><br>
+    <input type="string" id="pathInp" name="pathInp"><br><br>
+    
+    <input type="submit" value="Submit"><br><br>
+    
+    <output id="pathOut">... Awaiting Input</output>
+    
+  </form>
+  
+  <button id="pathInp">Pick Folder</button>
+  
+  <ol id="pathList">
+  </ol>
+  
+  <h3>Edit Item</h3>
+  
+  <form id="editForm">
+    <input type="path" id="pathInp" name="pathInp"><br><br>
+    <input type="submit" value="Update/Add" style="margin-left: 1em; margin-right: 1em;">
+    <input type="button" value="Remove" style="margin-left: 1em; margin-right: 1em;">
+  </form>
+  
+  <h2>Output</h2>
+  
+  <h3>Search</h3>
+  
+  <p>
     
     Seperate Tags with spaces<br><br>
     
@@ -100,27 +118,23 @@
     
   </form>
   
-  <h2>Result</h2>
+  <h3>Search Result</h3>
   
-  <p style="text-indent: 0;" id="resultsQuant">Results: 0</p>
+  <p id="resultsQuant">Results: 0</p>
   
-  <button onclick="outputList();" style="margin-left: 1em; margin-right: 1em;">Output List</button>
-  <button onclick="clearList();" style="margin-left: 1em; margin-right: 1em;">Clear Output</button><br>
+  <button onclick="outSrchList();" style="margin-left: 1em; margin-right: 1em;">Output List</button>
+  <button onclick="clrSrchList();" style="margin-left: 1em; margin-right: 1em;">Clear Output</button><br>
   
-  <ul id="list">
+  <ol id="srchList">
     
-  </ul>
+  </ol>
   
-  <img id="display" style="width: 50%;"><br><br>
+  <img id="srchDisplay" style="width: 50%;"><br><br>
     
 </img>
   
 </body>
 
-<!--Start-->
-
 </html>
-
-<!--End-->
 
 <!--Hello!-->

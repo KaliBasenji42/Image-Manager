@@ -6,18 +6,7 @@ const outputSet = new Set();
 
 let loadStart = 0;
 
-let timeout;
-
 // Functions
-
-function load(href) {
-  
-  document.querySelector('body').style = "animation-name: unload;" + 
-                                         "animation-duration: 0.5s;";
-  
-  timeout = setTimeout(redirect, 500, href);
-  
-}
 
 function strToArray(str, div = ' ') {
   
@@ -113,7 +102,7 @@ function hasAllTags(obj, tags) {
 
 // Button Functions
 
-function outputList() {
+function outPathList() {
   
   if(outputSet.size > 100) {
     
@@ -123,7 +112,7 @@ function outputList() {
     
   }
   
-  let list = document.getElementById('list');
+  let list = document.getElementById('srchList');
   
   list.innerHTML = '';
   
@@ -132,10 +121,15 @@ function outputList() {
     // Variables
     
     let li = document.createElement('li');
+    li.style.whiteSpace = 'nowrap';
     
     // li
     
-    li.innerHTML = '<button onclick="setDisplay(\'' + obj.src + '\');">Display</button>' + obj.src + ' | Page: <a href="' + obj.page + '" target="_blank">' + obj.page + '</a> | Date: ' + obj.date + " | Tags: ";
+    li.innerHTML = '<button onclick="setDisplay(\'' + obj.src + '\', \'srchDisplay\');">Display</button>' + 
+                   '<br>' + obj.src + 
+                   '<br>Page: <a href="' + obj.page + '" target="_blank">' + obj.page + '</a>' + 
+                   '<br>Date: ' + obj.date + 
+                   '<br>Tags: ';
     
     for(tag of obj.tags) {
       
@@ -149,11 +143,52 @@ function outputList() {
   
 }
 
-function clearList() {
+function outSrchList() {
   
-  let list = document.getElementById('list');
+  if(outputSet.size > 100) {
+    
+    if(confirm('Over 100 results, are you sure you want to display?'));
+    
+    else return;
+    
+  }
   
-  let display = document.getElementById('display');
+  let list = document.getElementById('srchList');
+  
+  list.innerHTML = '';
+  
+  outputSet.forEach(function (obj) {
+    
+    // Variables
+    
+    let li = document.createElement('li');
+    li.style.whiteSpace = 'nowrap';
+    
+    // li
+    
+    li.innerHTML = '<button onclick="setDisplay(\'' + obj.src + '\', \'srchDisplay\');">Display</button>' + 
+                   '<br>' + obj.src + 
+                   '<br>Page: <a href="' + obj.page + '" target="_blank">' + obj.page + '</a>' + 
+                   '<br>Date: ' + obj.date + 
+                   '<br>Tags: ';
+    
+    for(tag of obj.tags) {
+      
+      li.innerHTML += tag + ', ';
+      
+    }
+    
+    list.appendChild(li);
+    
+  });
+  
+}
+
+function clrSrchList() {
+  
+  let list = document.getElementById('srchList');
+  
+  let display = document.getElementById('srchDisplay');
   
   list.innerHTML = '';
   
@@ -161,9 +196,9 @@ function clearList() {
   
 }
 
-function setDisplay(src) {
+function setDisplay(src, id) {
   
-  let display = document.getElementById('display');
+  let display = document.getElementById(id);
   
   display.src = src;
   
@@ -178,13 +213,16 @@ document.addEventListener('DOMContentLoaded', function() {
   let fileForm = document.getElementById('fileForm');
   let fileOut = document.getElementById('fileOut');
   
+  let pathForm = document.getElementById('pathForm');
+  let pathOut = document.getElementById('pathOut');
+  
+  let pathInp = document.getElementById('pathInp');
+  
   let searchForm = document.getElementById('searchForm');
   let resultsQuant = document.getElementById('resultsQuant');
   
-  // Load
+  // :P
   
-  document.querySelector('body').style = "animation-name: load;" +
-                                         "animation-duration: 1s;";
   loadSpin();
   
   // Forms
@@ -255,6 +293,27 @@ document.addEventListener('DOMContentLoaded', function() {
     
     else fileOut.innerText = '❌ No File';
     
+  });
+  
+  pathForm.addEventListener('submit', function(event) {
+    
+    event.preventDefault();
+    
+    // Variables and Constants
+    
+  });
+  
+  pathInp.addEventListener('click', async () => {
+    try {
+      // Request the user to select a directory
+      const directoryHandle = await window.showDirectoryPicker();
+      // Iterate through files in the directory
+      for await (const entry of directoryHandle.values()) {
+        console.log(`File: ${entry.name}`);
+      }
+    } catch (err) {
+      console.error('Error accessing folder:', err);
+    }
   });
   
   searchForm.addEventListener('submit', function(event) {

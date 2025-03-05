@@ -8,9 +8,7 @@ body {
   margin: auto;
   margin-top: 1em;
   width: 50%;
-  background-color: rgb(224, 160, 244);
-  background-image: linear-gradient(135deg, rgb(224, 192, 255), rgb(224, 128, 244)),
-                    linear-gradient(90deg, rgb(224, 192, 255), rgb(224, 128, 244));
+  background-color: rgb(224, 208, 240);
   background-position: 0vw 0vw, 100vw 50vw;
   background-size: 100vw 100vw, 200vw 100vw;
   background-repeat: no-repeat, repeat;
@@ -18,35 +16,17 @@ body {
 
 h1 {text-align: center;}
 
-p {text-indent: 2rem; font-size: 1.125rem}
+/* IDs */
 
-a {color: rgb(0, 96, 0);}
-a:hover {color: rgb(0, 128, 0);}
-
-img {
-  image-rendering: auto;
-  image-rendering: pixelated;
+#srchList {
+  overflow-x: scroll;
+  max-height: 20em;
 }
-
-form {font-size: 1.125rem}
-
-li {font-size: 1.125rem}
 
 /* Media */
 
 @media (max-width: 600px) {
   body {
     width: 80%;
-  }
-}
-
-/* Load Animation */
-
-@keyframes load {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
   }
 }
