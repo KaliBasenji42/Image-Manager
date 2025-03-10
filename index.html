@@ -42,27 +42,42 @@
   
   <h3>Folder Path</h3>
   
-  <form id="pathForm">
+  <p>
+    Select the 'imgs' folder in the repository for this HTML file.<br><br>
     
-    <label>Path relative to this file</label><br>
-    <input type="string" id="pathInp" name="pathInp"><br><br>
-    
-    <input type="submit" value="Submit"><br><br>
-    
-    <output id="pathOut">... Awaiting Input</output>
-    
-  </form>
+    This will only iterate through this folder, not subdirectories.<br>
+    So if you select a subdirectory, add its name to the "Subdirectory" field below.<br>
+  </p>
   
-  <button id="pathInp">Pick Folder</button>
+  <button id="pathInp">Pick Folder</button><br>
+  <output id="pathOut">... Awaiting Input</output><br>
   
   <ol id="pathList">
   </ol>
   
+  <img id="pathDisplay" style="width: 50%;"><br><br>
+  
   <h3>Edit Item</h3>
   
+  <p>
+    Seperate Tags with spaces<br>
+  </p>
+  
   <form id="editForm">
-    <input type="path" id="pathInp" name="pathInp"><br><br>
-    <input type="submit" value="Update/Add" style="margin-left: 1em; margin-right: 1em;">
+    <label for="dir">Subdirectory</label><br>
+    <input type="string" id="dir" name="dir" style="width:15em"><br>
+    <label for="src">"src"</label><br>
+    <input type="string" id="src" name="src" style="width:15em"><br>
+    <label for="page">"page"</label><br>
+    <input type="string" id="page" name="page" style="width:15em"><br>
+    <label for="date">"date"</label><br>
+    <input type="date" id="date" name="date"><br>
+    <label for="tags">Tags</label><br>
+    <input type="string" id="tagsEdit" name="tags" style="width:15em"
+           value="src:path artist:"><br><br>
+    
+    <input type="button" value="Add" style="margin-left: 1em; margin-right: 1em;">
+    <input type="button" value="Overwrite" style="margin-left: 1em; margin-right: 1em;">
     <input type="button" value="Remove" style="margin-left: 1em; margin-right: 1em;">
   </form>
   

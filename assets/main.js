@@ -4,6 +4,10 @@ const allSet = new Set();
 
 const outputSet = new Set();
 
+const files = new Set();
+
+const newSet = new Set();
+
 let loadStart = 0;
 
 // Functions
@@ -104,19 +108,11 @@ function hasAllTags(obj, tags) {
 
 function outPathList() {
   
-  if(outputSet.size > 100) {
-    
-    if(confirm('Over 100 results, are you sure you want to display?'));
-    
-    else return;
-    
-  }
-  
-  let list = document.getElementById('srchList');
+  let list = document.getElementById('pathList');
   
   list.innerHTML = '';
   
-  outputSet.forEach(function (obj) {
+  files.forEach(function (obj) {
     
     // Variables
     
@@ -125,21 +121,33 @@ function outPathList() {
     
     // li
     
-    li.innerHTML = '<button onclick="setDisplay(\'' + obj.src + '\', \'srchDisplay\');">Display</button>' + 
-                   '<br>' + obj.src + 
-                   '<br>Page: <a href="' + obj.page + '" target="_blank">' + obj.page + '</a>' + 
-                   '<br>Date: ' + obj.date + 
-                   '<br>Tags: ';
-    
-    for(tag of obj.tags) {
-      
-      li.innerHTML += tag + ', ';
-      
-    }
+    li.innerHTML = '<button onclick="setImgPath(\'' + obj.name + '\')">Edit</button>' + 
+                   obj.name;
     
     list.appendChild(li);
     
   });
+  
+}
+
+function setImgPath(name) {
+  
+  // Get Elems
+  
+  let dirInp = document.getElementById('dir');
+  let srcInp = document.getElementById('src');
+  let pageInp = document.getElementById('page');
+  let dateInp = document.getElementById('date');
+  let tagsInp = document.getElementById('tagsEdit');
+  
+  // Vars
+  
+  path = dirInp.value + name;
+  console.log(path);
+  
+  // Set
+  
+  setDisplay('imgs/' + path, 'pathDisplay');
   
 }
 
@@ -214,9 +222,8 @@ document.addEventListener('DOMContentLoaded', function() {
   let fileOut = document.getElementById('fileOut');
   
   let pathForm = document.getElementById('pathForm');
-  let pathOut = document.getElementById('pathOut');
-  
   let pathInp = document.getElementById('pathInp');
+  let pathOut = document.getElementById('pathOut');
   
   let searchForm = document.getElementById('searchForm');
   let resultsQuant = document.getElementById('resultsQuant');
@@ -295,25 +302,37 @@ document.addEventListener('DOMContentLoaded', function() {
     
   });
   
-  pathForm.addEventListener('submit', function(event) {
-    
-    event.preventDefault();
-    
-    // Variables and Constants
-    
-  });
-  
   pathInp.addEventListener('click', async () => {
+    
     try {
-      // Request the user to select a directory
-      const directoryHandle = await window.showDirectoryPicker();
-      // Iterate through files in the directory
-      for await (const entry of directoryHandle.values()) {
-        console.log(`File: ${entry.name}`);
+      
+      const folder = await window.showDirectoryPicker();
+      
+      pathOut.innerHTML = '🔄 Processing';
+      loadStart = Date.now();
+      
+      console.log(folder);
+      
+      for await (const entry of folder.values()) {
+        if(entry.kind == 'file') files.add(entry);
       }
-    } catch (err) {
-      console.error('Error accessing folder:', err);
+      
+      outPathList();
+      
+      pathOut.innerHTML = '✅ Time: ' + (Date.now() - loadStart) + 'ms';
+      
     }
+    
+    catch(error) {
+      
+      pathOut.innerHTML = '⚠️ Processing Error';
+      if(error.name == 'AbortError') pathOut.innerHTML = '❌ Aborted'
+      
+      console.log('Processing Error:');
+      console.log(error);
+      
+    }
+    
   });
   
   searchForm.addEventListener('submit', function(event) {

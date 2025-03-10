@@ -23,6 +23,11 @@ h1 {text-align: center;}
   max-height: 20em;
 }
 
+#pathList {
+  overflow-x: scroll;
+  max-height: 20em;
+}
+
 /* Media */
 
 @media (max-width: 600px) {
