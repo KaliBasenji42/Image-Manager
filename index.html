@@ -47,15 +47,31 @@
     
     This will only iterate through this folder, not subdirectories.<br>
     So if you select a subdirectory, add its name to the "Subdirectory" field below.<br>
+    Be sure to input subdirectory before picking a folder, as picking a folder submits the form.<br>
   </p>
   
-  <button id="pathInp">Pick Folder</button><br>
-  <output id="pathOut">... Awaiting Input</output><br>
+  <form id="pathForm">
+    <label for="pathSub">Subdirectory</label><br>
+    <input type="text" id="pathSub" name="pathSub" style="width:15em"><br><br>
+    
+    <input type="submit" value="Pick Folder & Submit"><br>
+    
+    <output id="pathOut">... Awaiting Input</output>
+  </form>
   
   <ol id="pathList">
+    
   </ol>
   
-  <img id="pathDisplay" style="width: 50%;"><br><br>
+  <button onclick="setDisplay('', 'pathDisplay');" style="margin-left: 1em; margin-right: 1em;">Clear Image</button><br><br>
+  
+  <div class="imgCont">
+    <img id="pathDisplay">
+  </div><br>
+  
+  <div id="pathOutPos">#. ___</div><br>
+  <button onclick="pathEdit(currentFile - 1);" style="margin-left: 1em; margin-right: 1em;"><</button>
+  <button onclick="pathEdit(currentFile + 1);" style="margin-left: 1em; margin-right: 1em;">></button><br>
   
   <h3>Edit Item</h3>
   
@@ -64,17 +80,15 @@
   </p>
   
   <form id="editForm">
-    <label for="dir">Subdirectory</label><br>
-    <input type="string" id="dir" name="dir" style="width:15em"><br>
-    <label for="src">"src"</label><br>
-    <input type="string" id="src" name="src" style="width:15em"><br>
+    <label for="editSrc">"src"</label><br>
+    <input type="text" id="editSrc" name="editSrc" style="width:15em"><br>
     <label for="page">"page"</label><br>
-    <input type="string" id="page" name="page" style="width:15em"><br>
+    <input type="text" id="page" name="page" style="width:15em"><br>
     <label for="date">"date"</label><br>
     <input type="date" id="date" name="date"><br>
     <label for="tags">Tags</label><br>
-    <input type="string" id="tagsEdit" name="tags" style="width:15em"
-           value="src:path artist:"><br><br>
+    <input type="text" id="tagsEdit" name="tags" style="width:15em"
+           value="src:path art:"><br><br>
     
     <input type="button" value="Add" style="margin-left: 1em; margin-right: 1em;">
     <input type="button" value="Overwrite" style="margin-left: 1em; margin-right: 1em;">
@@ -138,15 +152,17 @@
   <p id="resultsQuant">Results: 0</p>
   
   <button onclick="outSrchList();" style="margin-left: 1em; margin-right: 1em;">Output List</button>
-  <button onclick="clrSrchList();" style="margin-left: 1em; margin-right: 1em;">Clear Output</button><br>
+  <button onclick="clrList('srchList');" style="margin-left: 1em; margin-right: 1em;">Clear List</button><br>
   
   <ol id="srchList">
     
   </ol>
   
-  <img id="srchDisplay" style="width: 50%;"><br><br>
-    
-</img>
+  <button onclick="setDisplay('', 'srchDisplay');" style="margin-left: 1em; margin-right: 1em;">Clear Image</button><br><br>
+  
+  <div class="imgCont">
+    <img id="srchDisplay">
+  </div><br>
   
 </body>
 

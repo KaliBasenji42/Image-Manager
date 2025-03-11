@@ -4,11 +4,8 @@ const allSet = new Set();
 
 const outputSet = new Set();
 
-const files = new Set();
-
-const newSet = new Set();
-
-let loadStart = 0;
+let files = [];
+let currentFile = -1;
 
 // Functions
 
@@ -112,42 +109,48 @@ function outPathList() {
   
   list.innerHTML = '';
   
-  files.forEach(function (obj) {
+  for(let i = 0; i < files.length; i++) {
     
     // Variables
+    
+    file = files[i];
     
     let li = document.createElement('li');
     li.style.whiteSpace = 'nowrap';
     
     // li
     
-    li.innerHTML = '<button onclick="setImgPath(\'' + obj.name + '\')">Edit</button>' + 
-                   obj.name;
+    li.innerHTML = '<button onclick="pathEdit(' + i + ')">Edit</button>' + 
+                   '<span style="margin-left: 0.5em;"> ' + file + '</span>';
     
     list.appendChild(li);
     
-  });
+  }
   
 }
 
-function setImgPath(name) {
+function pathEdit(fileI) {
   
-  // Get Elems
+  // Elems
   
-  let dirInp = document.getElementById('dir');
-  let srcInp = document.getElementById('src');
-  let pageInp = document.getElementById('page');
-  let dateInp = document.getElementById('date');
-  let tagsInp = document.getElementById('tagsEdit');
+  let pathOutPos = document.getElementById('pathOutPos');
   
-  // Vars
+  let editSrc = document.getElementById('editSrc');
+  //let date
   
-  path = dirInp.value + name;
-  console.log(path);
+  // Variables
+  
+  if(fileI < 0) fileI = 0;
+  if(fileI >= files.length) fileI = files.length - 1;
+  
+  currentFile = fileI;
   
   // Set
   
-  setDisplay('imgs/' + path, 'pathDisplay');
+  setDisplay('imgs/' + files[fileI], 'pathDisplay');
+  pathOutPos.innerText = '' + (currentFile + 1) + 
+                         '. ' + files[fileI];
+  
   
 }
 
@@ -174,7 +177,14 @@ function outSrchList() {
     
     // li
     
-    li.innerHTML = '<button onclick="setDisplay(\'' + obj.src + '\', \'srchDisplay\');">Display</button>' + 
+    let src = obj.src;
+    
+    for(tag of obj.tags) {
+      if(tag == 'src:web') break;
+      if(tag == 'src:path') src = 'imgs/' + src; break;
+    }
+    
+    li.innerHTML = '<button onclick="setDisplay(\'' + src + '\', \'srchDisplay\');">Display</button>' + 
                    '<br>' + obj.src + 
                    '<br>Page: <a href="' + obj.page + '" target="_blank">' + obj.page + '</a>' + 
                    '<br>Date: ' + obj.date + 
@@ -192,15 +202,11 @@ function outSrchList() {
   
 }
 
-function clrSrchList() {
+function clrList(id) {
   
-  let list = document.getElementById('srchList');
-  
-  let display = document.getElementById('srchDisplay');
+  let list = document.getElementById(id);
   
   list.innerHTML = '';
-  
-  display.src = "";
   
 }
 
@@ -222,7 +228,6 @@ document.addEventListener('DOMContentLoaded', function() {
   let fileOut = document.getElementById('fileOut');
   
   let pathForm = document.getElementById('pathForm');
-  let pathInp = document.getElementById('pathInp');
   let pathOut = document.getElementById('pathOut');
   
   let searchForm = document.getElementById('searchForm');
@@ -249,7 +254,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if(file.type == 'application/json') {
         
         fileOut.innerHTML = '🔄 Processing';
-        loadStart = Date.now();
+        fileOut.start = Date.now();
         
         const reader = new FileReader();
         
@@ -275,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('allSet:');
             console.log(allSet);
             
-            fileOut.innerHTML = '✅ Time: ' + (Date.now() - loadStart) + 'ms';
+            fileOut.innerHTML = '✅ Time: ' + (Date.now() - fileOut.start) + 'ms';
             
           }
           
@@ -302,24 +307,33 @@ document.addEventListener('DOMContentLoaded', function() {
     
   });
   
-  pathInp.addEventListener('click', async () => {
+  pathForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+  });
+  
+  pathForm.addEventListener('submit', async () => {
+    
+    let sub = document.getElementById('pathSub').value;
     
     try {
       
       const folder = await window.showDirectoryPicker();
       
       pathOut.innerHTML = '🔄 Processing';
-      loadStart = Date.now();
+      pathOut.start = Date.now();
       
-      console.log(folder);
+      files = [];
       
       for await (const entry of folder.values()) {
-        if(entry.kind == 'file') files.add(entry);
+        if(entry.kind == 'file') files.push(sub + entry.name);
       }
+      
+      console.log('Files:');
+      console.log(files);
       
       outPathList();
       
-      pathOut.innerHTML = '✅ Time: ' + (Date.now() - loadStart) + 'ms';
+      pathOut.innerHTML = '✅ Time: ' + (Date.now() - pathOut.start) + 'ms';
       
     }
     
@@ -357,7 +371,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let resultsQuant = document.getElementById('resultsQuant');
     
     searchOut.innerHTML = '🔄 Searching';
-    loadStart = Date.now();
+    searchOut.start = Date.now();
     
     // inc
     
@@ -375,7 +389,7 @@ document.addEventListener('DOMContentLoaded', function() {
           
         });
         
-        searchOut.innerHTML = '✅ Time: ' + (Date.now() - loadStart) + 'ms';
+        searchOut.innerHTML = '✅ Time: ' + (Date.now() - searchOut.start) + 'ms';
         
       }
       
@@ -408,7 +422,7 @@ document.addEventListener('DOMContentLoaded', function() {
           
         });
         
-        searchOut.innerHTML = '✅ Time: ' + (Date.now() - loadStart) + 'ms';
+        searchOut.innerHTML = '✅ Time: ' + (Date.now() - searchOut.start) + 'ms';
         
       }
       
@@ -441,7 +455,7 @@ document.addEventListener('DOMContentLoaded', function() {
           
         });
         
-        searchOut.innerHTML = '✅ Time: ' + (Date.now() - loadStart) + 'ms';
+        searchOut.innerHTML = '✅ Time: ' + (Date.now() - searchOut.start) + 'ms';
         
       }
       
