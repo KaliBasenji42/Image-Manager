@@ -83,17 +83,37 @@
     <label for="editSrc">"src"</label><br>
     <input type="text" id="editSrc" name="editSrc" style="width:15em"><br>
     <label for="page">"page"</label><br>
-    <input type="text" id="page" name="page" style="width:15em"><br>
+    <input type="text" id="editPage" name="page" style="width:15em"><br>
     <label for="date">"date"</label><br>
-    <input type="date" id="date" name="date"><br>
+    <input type="date" id="editDate" name="date"><br>
     <label for="tags">Tags</label><br>
-    <input type="text" id="tagsEdit" name="tags" style="width:15em"
+    <input type="text" id="editTags" name="tags" style="width:15em"
            value="src:path art:"><br><br>
     
-    <input type="button" value="Add" style="margin-left: 1em; margin-right: 1em;">
-    <input type="button" value="Overwrite" style="margin-left: 1em; margin-right: 1em;">
-    <input type="button" value="Remove" style="margin-left: 1em; margin-right: 1em;">
+    <input type="reset" value="Reset" style="margin-left: 1em; margin-right: 1em;"><br><br>
+    
+    <input type="button" id="editAdd" value="Add" style="margin-left: 1em; margin-right: 1em;">
+    <input type="button" id="editOvr" value="Overwrite" style="margin-left: 1em; margin-right: 1em;">
+    <input type="button" id="editRmv" value="Remove" style="margin-left: 1em; margin-right: 1em;"><br><br>
+    
+    <output id="editOut">... Awaiting Input</output>
   </form>
+  
+  <h3>Save</h3>
+  
+  <p>
+    Save: Saves allSet to localStorage<br>
+    Load: Overwrites allSet to value saved in localStorage<br>
+    Download: Downloads allSet as JSON<br>
+  </p>
+  
+  <button style="margin-left: 1em; margin-right: 1em;" onclick="save();">Save</button>
+  <button style="margin-left: 1em; margin-right: 1em;" onclick="load();">Load</button>
+  <button style="margin-left: 1em; margin-right: 1em;" onclick="download();">Download</button><br><br>
+  
+  <output id="saveOut">... Awaiting Input</output>
+  
+  <p id="storageUsage">localStorage: ? Bytes / 5,242,880 Bytes (0%)</p>
   
   <h2>Output</h2>
   

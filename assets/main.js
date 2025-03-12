@@ -101,6 +101,62 @@ function hasAllTags(obj, tags) {
   
 }
 
+function numForm(num) {
+  
+  let numStr = '' + num;
+  let out = '';
+  
+  for(let i = 0; i < numStr.length; i++) {
+    
+    pos = numStr.length - i - 1;
+    add = i % 3 == 0 && i != 0;
+    
+    if(add) out = ',' + out;
+    
+    out = numStr[pos] + out;
+    
+  }
+  
+  return out;
+  
+}
+
+function getUsage() {
+  
+  let usage = 0;
+  
+  for(let key in localStorage) {
+    if(localStorage.hasOwnProperty(key)) {
+      item = localStorage.getItem(key);
+      
+      usage += item.length;
+    }
+  }
+  
+  return usage;
+  
+}
+
+function outUsage() {
+  
+  // Variables
+  
+  let storageUsage = document.getElementById('storageUsage');
+  
+  let quota = 5 * 1024 * 1024;
+  let usage = getUsage();
+  
+  // Text
+  
+  frac = usage/quota;
+  percent = frac * 100;
+  
+  storageUsage.innerHTML = 'localStorage: ' + numForm(usage) + 
+                           ' Bytes / ' + numForm(quota) + 
+                           ' Bytes (' + Math.floor(percent) + '%)';
+  
+}
+
 // Button Functions
 
 function outPathList() {
@@ -121,7 +177,7 @@ function outPathList() {
     // li
     
     li.innerHTML = '<button onclick="pathEdit(' + i + ')">Edit</button>' + 
-                   '<span style="margin-left: 0.5em;"> ' + file + '</span>';
+                   '<span style="margin-left: 0.5em;"> ' + file.path + '</span>';
     
     list.appendChild(li);
     
@@ -136,7 +192,7 @@ function pathEdit(fileI) {
   let pathOutPos = document.getElementById('pathOutPos');
   
   let editSrc = document.getElementById('editSrc');
-  //let date
+  let editDate = document.getElementById('editDate');
   
   // Variables
   
@@ -147,10 +203,67 @@ function pathEdit(fileI) {
   
   // Set
   
-  setDisplay('imgs/' + files[fileI], 'pathDisplay');
+  setDisplay('imgs/' + files[fileI].path, 'pathDisplay');
   pathOutPos.innerText = '' + (currentFile + 1) + 
-                         '. ' + files[fileI];
+                         '. ' + files[fileI].path;
   
+  editSrc.value = files[fileI].path;
+  editDate.value = files[fileI].date;
+                         
+}
+
+function save() {
+  
+  saveOut = document.getElementById('saveOut');
+  saveOut.innerHTML = '🔄 Processing';
+  saveOut.start = Date.now();
+  
+  localStorage.clear();
+  
+  let i = 0;
+  
+  console.log('Saving:');
+  
+  for(let item of allSet) {
+    
+    localStorage.setItem('allSet' + i, JSON.stringify(item));
+    console.log('allSet' + i + ': ' + JSON.stringify(item));
+    
+    i++;
+    
+  }
+  
+  localStorage.setItem('allSetLen', i);
+  
+  outUsage();
+  
+  saveOut.innerHTML = '✅ Saved in ' + (Date.now() - saveOut.start) + 'ms';
+  
+}
+
+function load() {
+  
+  saveOut = document.getElementById('saveOut');
+  saveOut.innerHTML = '🔄 Processing';
+  saveOut.start = Date.now();
+  
+  allSet.clear()
+  
+  let length = parseInt(localStorage.getItem('allSetLen'));
+  
+  for(let i = 0; i < length; i++) {
+    
+    let = key = 'allSet' + i;
+    
+    item = JSON.parse(localStorage.getItem(key));
+    allSet.add(item);
+    
+  }
+  
+  console.log('allSet:');
+  console.log(allSet);
+  
+  saveOut.innerHTML = '✅ Loaded in ' + (Date.now() - saveOut.start) + 'ms';
   
 }
 
@@ -230,8 +343,16 @@ document.addEventListener('DOMContentLoaded', function() {
   let pathForm = document.getElementById('pathForm');
   let pathOut = document.getElementById('pathOut');
   
+  let editAdd = this.document.getElementById('editAdd');
+  let editOvr = this.document.getElementById('editOvr');
+  let editRmv = this.document.getElementById('editRmv');
+  
   let searchForm = document.getElementById('searchForm');
   let resultsQuant = document.getElementById('resultsQuant');
+  
+  // Storage
+  
+  outUsage();
   
   // :P
   
@@ -325,8 +446,31 @@ document.addEventListener('DOMContentLoaded', function() {
       files = [];
       
       for await (const entry of folder.values()) {
-        if(entry.kind == 'file') files.push(sub + entry.name);
+        
+        if(entry.kind != 'file') continue;
+        
+        let fileHandle = await entry.getFile();
+        
+        let date = new Date(fileHandle.lastModified);
+        
+        let year = '' + date.getFullYear();
+        let month = '' + (date.getMonth() + 1);
+        if(month.length < 2) month = '0' + month;
+        let day = '' + date.getDate();
+        if(day.length < 2) day = '0' + day;
+        
+        let dateStr = year + '-' + month + '-' + day;
+        
+        let file = {
+          'path': sub + entry.name,
+          'date': dateStr
+        };
+        
+        files.push(file);
+        
       }
+      
+      files.sort();
       
       console.log('Files:');
       console.log(files);
@@ -348,6 +492,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
   });
+  
+  
   
   searchForm.addEventListener('submit', function(event) {
     
