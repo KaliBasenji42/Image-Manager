@@ -343,9 +343,9 @@ document.addEventListener('DOMContentLoaded', function() {
   let pathForm = document.getElementById('pathForm');
   let pathOut = document.getElementById('pathOut');
   
-  let editAdd = this.document.getElementById('editAdd');
-  let editOvr = this.document.getElementById('editOvr');
-  let editRmv = this.document.getElementById('editRmv');
+  let editAdd = document.getElementById('editAdd');
+  let editOvr = document.getElementById('editOvr');
+  let editRmv = document.getElementById('editRmv');
   
   let searchForm = document.getElementById('searchForm');
   let resultsQuant = document.getElementById('resultsQuant');
