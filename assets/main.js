@@ -346,6 +346,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let editAdd = document.getElementById('editAdd');
   let editOvr = document.getElementById('editOvr');
   let editRmv = document.getElementById('editRmv');
+  let editOut = document.getElementById('editOut');
   
   let searchForm = document.getElementById('searchForm');
   let resultsQuant = document.getElementById('resultsQuant');
@@ -493,7 +494,89 @@ document.addEventListener('DOMContentLoaded', function() {
     
   });
   
+  editAdd.addEventListener('click', function() {
+    
+    try {
+      
+      editOut.innerHTML = '🔄 Adding';
+      editOut.start = Date.now();
+      
+      let src = document.getElementById('editSrc').value;
+      
+      allSet.forEach(function (obj) {
+        if(obj.src == src) throw new Error('dup');
+      });
+      
+      let obj = {
+        src: document.getElementById('editSrc').value,
+        page: document.getElementById('editPage').value,
+        date: document.getElementById('editDate').value,
+        tags: document.getElementById('editTags').value.split(' ')
+      };
+      
+      allSet.add(obj);
+      
+      editOut.innerHTML = '✅ Added in ' + (Date.now() - editOut.start) + 'ms';
+      
+      console.log('Added:');
+      console.log(obj);
+      
+    }
+    
+    catch(error) {
+      
+      editOut.innerHTML = '⚠️ Error Adding';
+      if(error.message == 'dup') editOut.innerHTML = '⚠️ Already in Set'
+      
+      console.log('Adding Error:');
+      console.log(error);
+      
+    }
+    
+  });
   
+  editOvr.addEventListener('click', function() {
+    
+    try {
+      
+      editOut.innerHTML = '🔄 Overwriting';
+      editOut.start = Date.now();
+      
+      let src = document.getElementById('editSrc').value;
+      
+      
+      
+      allSet.forEach(function (obj) {
+        if(obj.src == src) throw new Error('dup');
+      });
+      
+      let obj = {
+        src: document.getElementById('editSrc').value,
+        page: document.getElementById('editPage').value,
+        date: document.getElementById('editDate').value,
+        tags: document.getElementById('editTags').value.split(' ')
+      };
+      
+      allSet.add(obj);
+      
+      editOut.innerHTML = '✅ Added in ' + (Date.now() - editOut.start) + 'ms';
+      
+      console.log('Added:');
+      console.log(obj);
+      
+    }
+    
+    catch(error) {
+      
+      editOut.innerHTML = '⚠️ Error Adding';
+      if(error.message == 'dup') editOut.innerHTML = '⚠️ Already in Set'
+      
+      console.log('Adding Error:');
+      console.log(error);
+      
+    }
+    
+  });
   
   searchForm.addEventListener('submit', function(event) {
     
