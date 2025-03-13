@@ -1,8 +1,8 @@
 // Variables and Constants
 
-const allSet = new Set();
+let allSet = {};
 
-const outputSet = new Set();
+let outputSet = {};
 
 let files = [];
 let currentFile = -1;
@@ -220,20 +220,13 @@ function save() {
   
   localStorage.clear();
   
-  let i = 0;
-  
   console.log('Saving:');
   
-  for(let item of allSet) {
-    
-    localStorage.setItem('allSet' + i, JSON.stringify(item));
-    console.log('allSet' + i + ': ' + JSON.stringify(item));
-    
-    i++;
-    
-  }
+  let allSetStr = JSON.stringify(allSet);
   
-  localStorage.setItem('allSetLen', i);
+  localStorage.setItem('allSet', allSetStr);
+  
+  console.log(allSetStr);
   
   outUsage();
   
@@ -247,18 +240,7 @@ function load() {
   saveOut.innerHTML = '🔄 Processing';
   saveOut.start = Date.now();
   
-  allSet.clear()
-  
-  let length = parseInt(localStorage.getItem('allSetLen'));
-  
-  for(let i = 0; i < length; i++) {
-    
-    let = key = 'allSet' + i;
-    
-    item = JSON.parse(localStorage.getItem(key));
-    allSet.add(item);
-    
-  }
+  allSet = JSON.parse(localStorage.getItem('allSet'));
   
   console.log('allSet:');
   console.log(allSet);
@@ -281,7 +263,7 @@ function outSrchList() {
   
   list.innerHTML = '';
   
-  outputSet.forEach(function (obj) {
+  Object.entries(outputSet).forEach(function(key, values) {
     
     // Variables
     
@@ -290,20 +272,20 @@ function outSrchList() {
     
     // li
     
-    let src = obj.src;
+    let src = key;
     
-    for(tag of obj.tags) {
+    for(tag of values.tags) {
       if(tag == 'src:web') break;
       if(tag == 'src:path') src = 'imgs/' + src; break;
     }
     
     li.innerHTML = '<button onclick="setDisplay(\'' + src + '\', \'srchDisplay\');">Display</button>' + 
-                   '<br>' + obj.src + 
-                   '<br>Page: <a href="' + obj.page + '" target="_blank">' + obj.page + '</a>' + 
-                   '<br>Date: ' + obj.date + 
+                   '<br>' + key + 
+                   '<br>Page: <a href="' + values.page + '" target="_blank">' + values.page + '</a>' + 
+                   '<br>Date: ' + values.date + 
                    '<br>Tags: ';
     
-    for(tag of obj.tags) {
+    for(tag of values.tags) {
       
       li.innerHTML += tag + ', ';
       
@@ -388,16 +370,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const index = JSON.parse(json);
             
-            console.log('index:');
-            console.log(index);
-            
-            allSet.clear();
-            
-            for(const obj of index) {
-              
-              allSet.add(obj);
-              
-            }
+            allSet = index;
             
             console.log('allSet:');
             console.log(allSet);
@@ -503,8 +476,8 @@ document.addEventListener('DOMContentLoaded', function() {
       
       let src = document.getElementById('editSrc').value;
       
-      allSet.forEach(function (obj) {
-        if(obj.src == src) throw new Error('dup');
+      Object.keys(outputSet).forEach(function(key) {
+        if(key == src) throw new Error('dup');
       });
       
       let obj = {
@@ -514,7 +487,7 @@ document.addEventListener('DOMContentLoaded', function() {
         tags: document.getElementById('editTags').value.split(' ')
       };
       
-      allSet.add(obj);
+      allSet[src] = obj;
       
       editOut.innerHTML = '✅ Added in ' + (Date.now() - editOut.start) + 'ms';
       
@@ -544,11 +517,15 @@ document.addEventListener('DOMContentLoaded', function() {
       
       let src = document.getElementById('editSrc').value;
       
-      
+      let match = false;
       
       allSet.forEach(function (obj) {
-        if(obj.src == src) throw new Error('dup');
+        if(obj.src == src) {
+          match = true;
+        }
       });
+      
+      if(!match) throw new Error('!mtch')
       
       let obj = {
         src: document.getElementById('editSrc').value,
@@ -557,7 +534,7 @@ document.addEventListener('DOMContentLoaded', function() {
         tags: document.getElementById('editTags').value.split(' ')
       };
       
-      allSet.add(obj);
+      allSet[src] = obj;
       
       editOut.innerHTML = '✅ Added in ' + (Date.now() - editOut.start) + 'ms';
       
@@ -569,7 +546,7 @@ document.addEventListener('DOMContentLoaded', function() {
     catch(error) {
       
       editOut.innerHTML = '⚠️ Error Adding';
-      if(error.message == 'dup') editOut.innerHTML = '⚠️ Already in Set'
+      if(error.message == '!mtch') editOut.innerHTML = '⚠️ Not in Set'
       
       console.log('Adding Error:');
       console.log(error);
