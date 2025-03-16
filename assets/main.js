@@ -476,7 +476,7 @@ document.addEventListener('DOMContentLoaded', function() {
       
       let src = document.getElementById('editSrc').value;
       
-      Object.keys(outputSet).forEach(function(key) {
+      Object.keys(allSet).forEach(function(key) {
         if(key == src) throw new Error('dup');
       });
       
@@ -519,10 +519,8 @@ document.addEventListener('DOMContentLoaded', function() {
       
       let match = false;
       
-      allSet.forEach(function (obj) {
-        if(obj.src == src) {
-          match = true;
-        }
+      Object.keys(allSet).forEach(function(key) {
+        if(key == src) match = true;
       });
       
       if(!match) throw new Error('!mtch')
@@ -536,19 +534,19 @@ document.addEventListener('DOMContentLoaded', function() {
       
       allSet[src] = obj;
       
-      editOut.innerHTML = '✅ Added in ' + (Date.now() - editOut.start) + 'ms';
+      editOut.innerHTML = '✅ Overwritten in ' + (Date.now() - editOut.start) + 'ms';
       
-      console.log('Added:');
+      console.log('Overwritten:');
       console.log(obj);
       
     }
     
     catch(error) {
       
-      editOut.innerHTML = '⚠️ Error Adding';
+      editOut.innerHTML = '⚠️ Error Overwriting';
       if(error.message == '!mtch') editOut.innerHTML = '⚠️ Not in Set'
       
-      console.log('Adding Error:');
+      console.log('Overwriting Error:');
       console.log(error);
       
     }
@@ -585,7 +583,9 @@ document.addEventListener('DOMContentLoaded', function() {
       
       try {
         
-        allSet.forEach(function (obj) {
+        Object.keys(allSet).forEach(function(key) {
+          
+          let obj = allSet[key];
           
           let objDate = strToInt(obj.date);
           
@@ -616,7 +616,9 @@ document.addEventListener('DOMContentLoaded', function() {
       
       try {
         
-        outputSet.forEach(function (obj) {
+        Object.keys(allSet).forEach(function(key) {
+          
+          let obj = allSet[key];
           
           let objDate = strToInt(obj.date);
           
@@ -649,7 +651,9 @@ document.addEventListener('DOMContentLoaded', function() {
       
       try {
         
-        outputSet.forEach(function (obj) {
+        Object.keys(allSet).forEach(function(key) {
+          
+          let obj = allSet[key];
           
           let objDate = strToInt(obj.date);
           
