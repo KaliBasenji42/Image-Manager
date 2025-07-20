@@ -1,15 +1,15 @@
 // Variables and Constants
 
-let allSet = {};
+let allSet = {}; // Tags for all files
 
-let outputSet = {};
+let outputSet = {}; // Search output
 
-let files = [];
-let currentFile = -1;
+let files = []; // Files in folder
+let currentFile = -1; // Index of files in folder
 
 // Functions
 
-function strToArray(str, div = ' ') {
+function strToArray(str, div = ' ') { // Str --> Array
   
   const out = [];
   
@@ -41,7 +41,7 @@ function strToArray(str, div = ' ') {
   
 }
 
-function strToInt(str) {
+function strToInt(str) { // Str --> Int
   
   let numChars = '1234567890';
   
@@ -61,7 +61,7 @@ function strToInt(str) {
   
 }
 
-function hasAnyTags(obj, tags) {
+function hasAnyTags(obj, tags) { // True if any tag matches (for search)
   
   for(const tag of tags) {
     
@@ -79,7 +79,7 @@ function hasAnyTags(obj, tags) {
   
 }
 
-function hasAllTags(obj, tags) {
+function hasAllTags(obj, tags) { // True if all tags match (for search)
   
   for(const tag of tags) {
     
@@ -101,7 +101,7 @@ function hasAllTags(obj, tags) {
   
 }
 
-function numForm(num) {
+function numForm(num) { // Add commas to numbers
   
   let numStr = '' + num;
   let out = '';
@@ -121,7 +121,7 @@ function numForm(num) {
   
 }
 
-function getUsage() {
+function getUsage() { // Get localStorage usage
   
   let usage = 0;
   
@@ -137,7 +137,7 @@ function getUsage() {
   
 }
 
-function outUsage() {
+function outUsage() { // Output localStorage usage
   
   // Variables
   
@@ -159,7 +159,7 @@ function outUsage() {
 
 // Button Functions
 
-function outPathList() {
+function outPathList() { // Create a list, showing files (allows for selection)
   
   let list = document.getElementById('pathList');
   
@@ -185,7 +185,7 @@ function outPathList() {
   
 }
 
-function pathEdit(fileI) {
+function pathEdit(fileI) { // Select image for editing
   
   // Elems
   
@@ -203,7 +203,7 @@ function pathEdit(fileI) {
   
   // Set
   
-  setDisplay('imgs/' + files[fileI].path, 'pathDisplay');
+  setDisplay(files[fileI].path, 'pathDisplay');
   pathOutPos.innerText = '' + (currentFile + 1) + 
                          '. ' + files[fileI].path;
   
@@ -212,7 +212,7 @@ function pathEdit(fileI) {
                          
 }
 
-function save() {
+function save() { // Save allSet to localStorage
   
   saveOut = document.getElementById('saveOut');
   saveOut.innerHTML = '🔄 Processing';
@@ -234,7 +234,7 @@ function save() {
   
 }
 
-function load() {
+function load() { // Load allSet from localStorage
   
   saveOut = document.getElementById('saveOut');
   saveOut.innerHTML = '🔄 Processing';
@@ -249,7 +249,13 @@ function load() {
   
 }
 
-function outSrchList() {
+function download() { // For downloading allSet
+  
+  
+  
+}
+
+function outSrchList() { // Output search list
   
   if(outputSet.size > 100) {
     
@@ -276,7 +282,7 @@ function outSrchList() {
     
     for(tag of values.tags) {
       if(tag == 'src:web') break;
-      if(tag == 'src:path') src = 'imgs/' + src; break;
+      if(tag == 'src:path') src = + src; break;
     }
     
     li.innerHTML = '<button onclick="setDisplay(\'' + src + '\', \'srchDisplay\');">Display</button>' + 
@@ -297,7 +303,7 @@ function outSrchList() {
   
 }
 
-function clrList(id) {
+function clrList(id) { // Clear HTML list
   
   let list = document.getElementById(id);
   
@@ -305,7 +311,7 @@ function clrList(id) {
   
 }
 
-function setDisplay(src, id) {
+function setDisplay(src, id) { // Set the .src property of an elem.
   
   let display = document.getElementById(id);
   
@@ -343,7 +349,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Forms
   
-  fileForm.addEventListener('submit', function(event) {
+  fileForm.addEventListener('submit', function(event) { // For JSON
     
     event.preventDefault();
     
@@ -402,30 +408,23 @@ document.addEventListener('DOMContentLoaded', function() {
     
   });
   
-  pathForm.addEventListener('submit', function(event) {
-    event.preventDefault();
-  });
-  
-  pathForm.addEventListener('submit', async () => {
+  pathForm.addEventListener('submit', function(event) { // For image folder
     
-    let sub = document.getElementById('pathSub').value;
+    event.preventDefault();
     
     try {
       
-      const folder = await window.showDirectoryPicker();
+      let folder = document.getElementById('folderInp').files;
+      console.log(folder);
       
       pathOut.innerHTML = '🔄 Processing';
       pathOut.start = Date.now();
       
       files = [];
       
-      for await (const entry of folder.values()) {
+      for (let rawFile of folder) {
         
-        if(entry.kind != 'file') continue;
-        
-        let fileHandle = await entry.getFile();
-        
-        let date = new Date(fileHandle.lastModified);
+        let date = new Date(rawFile.lastModified);
         
         let year = '' + date.getFullYear();
         let month = '' + (date.getMonth() + 1);
@@ -436,7 +435,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let dateStr = year + '-' + month + '-' + day;
         
         let file = {
-          'path': sub + entry.name,
+          'path': rawFile.webkitRelativePath,
           'date': dateStr
         };
         
@@ -464,6 +463,10 @@ document.addEventListener('DOMContentLoaded', function() {
       console.log(error);
       
     }
+    
+  });
+  
+  pathForm.addEventListener('submit', async () => {
     
   });
   

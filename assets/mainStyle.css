@@ -7,7 +7,7 @@
 body {
   margin: auto;
   margin-top: 1em;
-  width: 50%;
+  width: 60%;
   background-color: rgb(224, 208, 240);
   background-position: 0vw 0vw, 100vw 50vw;
   background-size: 100vw 100vw, 200vw 100vw;
@@ -15,6 +15,23 @@ body {
 }
 
 h1 {text-align: center;}
+
+footer {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  
+  font-size: 12px;
+  
+  background-color: rgba(128, 240, 128, 0.25);
+}
+
+footer > div {
+  width: 60%;
+  margin: auto;
+}
 
 /* IDs */
 

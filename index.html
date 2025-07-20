@@ -32,9 +32,10 @@
     
     JSON Structure:<br><br>
     
-    [<br>
-    {"src":"<i>src</i>", "page":"<i>host/artist page</i>", "date":"<i>yyyy-mm-dd</i>", "tags":["src:<i>web/path</i>", "artist:<i>artist</i>", ...]}<br>
-    ]
+    {<br>
+    "path/id": {"page":"<i>host/artist page</i>", "date":"<i>yyyy-mm-dd</i>", "tags":["src:<i>web/path</i>", "artist:<i>artist</i>", ...]},<br>
+    ...<br>
+    }
     
   </p>
   
@@ -51,10 +52,9 @@
   </p>
   
   <form id="pathForm">
-    <label for="pathSub">Subdirectory</label><br>
-    <input type="text" id="pathSub" name="pathSub" style="width:15em"><br><br>
+    <input type="file" id="folderInp" name="folderInp" value="Pick Folder" webkitdirectory="" multiple=""><br>
     
-    <input type="submit" value="Pick Folder & Submit"><br>
+    <input type="submit" value="Submit"><br>
     
     <output id="pathOut">... Awaiting Input</output>
   </form>
@@ -185,6 +185,30 @@
   </div><br>
   
 </body>
+
+<footer>
+  <div>
+    Image Manager<br>
+    Copyright (C) 2025  KaliBasenji42<br><br>
+    
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; version 2 of the License.<br><br>
+    
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.<br><br>
+    
+    You should have received a copy of the GNU General Public License along
+    with this program; if not, write to the Free Software Foundation, Inc.,
+    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.<br><br>
+    
+    <a href="LICENSE.md" target="_blank">Attached License</a><br>
+    <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html" target="_blank">GPL v2</a><br>
+    <a href="https://github.com/KaliBasenji42" target="_blank">KaliBasenji42's Github</a>
+  </div>
+</footer>
 
 </html>
 
