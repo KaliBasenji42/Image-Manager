@@ -2,7 +2,7 @@
 
 let allSet = {}; // Tags for all files
 
-let outputSet = {}; // Search output
+let outputSet = new Set; // Search output
 
 let files = []; // Files in folder
 let currentFile = -1; // Index of files in folder
@@ -269,7 +269,7 @@ function outSrchList() { // Output search list
   
   list.innerHTML = '';
   
-  Object.entries(outputSet).forEach(function(key, values) {
+  outputSet.forEach(function(item) {
     
     // Variables
     
@@ -278,20 +278,13 @@ function outSrchList() { // Output search list
     
     // li
     
-    let src = key;
-    
-    for(tag of values.tags) {
-      if(tag == 'src:web') break;
-      if(tag == 'src:path') src = + src; break;
-    }
-    
-    li.innerHTML = '<button onclick="setDisplay(\'' + src + '\', \'srchDisplay\');">Display</button>' + 
-                   '<br>' + key + 
-                   '<br>Page: <a href="' + values.page + '" target="_blank">' + values.page + '</a>' + 
-                   '<br>Date: ' + values.date + 
+    li.innerHTML = '<button onclick="setDisplay(\'' + item.src + '\', \'srchDisplay\');">Display</button>' + 
+                   '<br>' + item.src + 
+                   '<br>Page: <a href="' + item.page + '" target="_blank">' + item.page + '</a>' + 
+                   '<br>Date: ' + item.date + 
                    '<br>Tags: ';
     
-    for(tag of values.tags) {
+    for(tag of item.tags) {
       
       li.innerHTML += tag + ', ';
       
@@ -466,10 +459,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
   });
   
-  pathForm.addEventListener('submit', async () => {
-    
-  });
-  
   editAdd.addEventListener('click', function() {
     
     try {
@@ -479,12 +468,11 @@ document.addEventListener('DOMContentLoaded', function() {
       
       let src = document.getElementById('editSrc').value;
       
-      Object.keys(allSet).forEach(function(key) {
+      Object.keys(allSet).forEach(function(key) { // Throw with 'dup' error
         if(key == src) throw new Error('dup');
       });
       
       let obj = {
-        src: document.getElementById('editSrc').value,
         page: document.getElementById('editPage').value,
         date: document.getElementById('editDate').value,
         tags: document.getElementById('editTags').value.split(' ')
@@ -522,14 +510,13 @@ document.addEventListener('DOMContentLoaded', function() {
       
       let match = false;
       
-      Object.keys(allSet).forEach(function(key) {
+      Object.keys(allSet).forEach(function(key) { // Match
         if(key == src) match = true;
       });
       
-      if(!match) throw new Error('!mtch')
+      if(!match) throw new Error('!mtch') // Throw with '!mtch' error
       
       let obj = {
-        src: document.getElementById('editSrc').value,
         page: document.getElementById('editPage').value,
         date: document.getElementById('editDate').value,
         tags: document.getElementById('editTags').value.split(' ')
@@ -589,6 +576,7 @@ document.addEventListener('DOMContentLoaded', function() {
         Object.keys(allSet).forEach(function(key) {
           
           let obj = allSet[key];
+          obj.src = key;
           
           let objDate = strToInt(obj.date);
           
@@ -622,6 +610,7 @@ document.addEventListener('DOMContentLoaded', function() {
         Object.keys(allSet).forEach(function(key) {
           
           let obj = allSet[key];
+          obj.src = key;
           
           let objDate = strToInt(obj.date);
           
@@ -657,6 +646,7 @@ document.addEventListener('DOMContentLoaded', function() {
         Object.keys(allSet).forEach(function(key) {
           
           let obj = allSet[key];
+          obj.src = key;
           
           let objDate = strToInt(obj.date);
           
