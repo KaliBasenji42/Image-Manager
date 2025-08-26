@@ -44,11 +44,7 @@
   <h3>Folder Path</h3>
   
   <p>
-    Select the 'imgs' folder in the repository for this HTML file.<br><br>
-    
-    This will only iterate through this folder, not subdirectories.<br>
-    So if you select a subdirectory, add its name to the "Subdirectory" field below.<br>
-    Be sure to input subdirectory before picking a folder, as picking a folder submits the form.<br>
+    Select the a sub-folder in the repository for this HTML file.
   </p>
   
   <form id="pathForm">
@@ -66,7 +62,7 @@
   <button onclick="setDisplay('', 'pathDisplay');" style="margin-left: 1em; margin-right: 1em;">Clear Image</button><br><br>
   
   <div class="imgCont">
-    <img id="pathDisplay">
+    <iframe id="pathDisplay"></iframe>
   </div><br>
   
   <div id="pathOutPos">#. ___</div><br>
@@ -181,7 +177,7 @@
   <button onclick="setDisplay('', 'srchDisplay');" style="margin-left: 1em; margin-right: 1em;">Clear Image</button><br><br>
   
   <div class="imgCont">
-    <img id="srchDisplay">
+    <iframe id="srchDisplay"></iframe>
   </div><br>
   
 </body>
