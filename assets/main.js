@@ -436,7 +436,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
       }
       
-      files.sort();
+      files.sort((a, b) => a.path.localeCompare(b.path));
       
       console.log('Files:');
       console.log(files);
