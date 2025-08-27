@@ -47,6 +47,8 @@ footer > div {
   
   width: 32rem;
   height: 32rem;
+  max-width: 60vw;
+  max-height: 60vw;
   
   overflow: hidden;
 }
@@ -62,5 +64,9 @@ footer > div {
 @media (max-width: 600px) {
   body {
     width: 80%;
+  }
+  .imgCont {
+    max-width: 80vw;
+    max-height: 80vw;
   }
 }
