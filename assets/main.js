@@ -251,7 +251,13 @@ function load() { // Load allSet from localStorage
 
 function download() { // For downloading allSet
   
+  let linkElem = document.getElementById('downloadLink'); // Download Link elem
   
+  let allSetStr = JSON.stringify(allSet, null, 2);
+  
+  let blob = new Blob([allSetStr], {type: 'application/json'}); // Blob
+  
+  linkElem.href = URL.createObjectURL(blob); // Set URL
   
 }
 
