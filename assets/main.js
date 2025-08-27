@@ -241,6 +241,7 @@ function setImageSrch(pos) { // Select image for search
   // Elems
   
   let outPos = document.getElementById('srchOutPos');
+  let outInfo = document.getElementById('srchOutInfo');
   
   // Variables
   
@@ -251,11 +252,23 @@ function setImageSrch(pos) { // Select image for search
   
   currentSrchPos = pos;
   
+  let item = outputArr[pos];
+  
   // Set
   
-  setDisplay(outputArr[pos].src, 'srchDisplay');
+  setDisplay(item.src, 'srchDisplay');
   outPos.innerText = '' + (pos + 1) + 
-                     '. ' + outputArr[pos].src;
+                     '. ' + item.src;
+  
+  // Set Info
+  
+  outInfo.innerHTML = 'Page: <a href="' + item.page + '" target="_blank">' + item.page + '</a><br><br>' + 
+                      'Date: ' + item.date + '<br><br>' + 
+                      'Tags:<br>';
+  
+  for(tag of item.tags) {
+    outInfo.innerHTML += tag + ' ';
+  }
   
 }
 
@@ -310,7 +323,7 @@ function download() { // For downloading allSet
 
 function outSrchList() { // Output search list
   
-  if(outputSet.size > 100) {
+  if(outputSet.size > 100) { // Over 100 Warning
     
     if(confirm('Over 100 results, are you sure you want to display?'));
     
@@ -318,8 +331,9 @@ function outSrchList() { // Output search list
     
   }
   
-  let list = document.getElementById('srchList');
+  // Variables
   
+  let list = document.getElementById('srchList');
   list.innerHTML = '';
   
   let i = 0;
@@ -333,17 +347,7 @@ function outSrchList() { // Output search list
     
     // li
     
-    li.innerHTML = '<button onclick="setImageSrch(' + i + ');">Display</button>' + 
-                   '<br>' + item.src + 
-                   '<br>Page: <a href="' + item.page + '" target="_blank">' + item.page + '</a>' + 
-                   '<br>Date: ' + item.date + 
-                   '<br>Tags: ';
-    
-    for(tag of item.tags) {
-      
-      li.innerHTML += tag + ', ';
-      
-    }
+    li.innerHTML = '<button onclick="setImageSrch(' + i + ');">Display</button>' + item.src;
     
     list.appendChild(li);
     
