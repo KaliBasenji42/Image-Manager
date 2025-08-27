@@ -5,7 +5,8 @@ let allSet = {}; // Tags for all files
 let outputSet = new Set; // Search output
 
 let files = []; // Files in folder
-let currentFile = -1; // Index of files in folder
+let currentPathPos = -1; // Index of files in folder for edit
+let currentSrchPos = -1; // Index of output for search
 
 // Functions
 
@@ -176,7 +177,7 @@ function outPathList() { // Create a list, showing files (allows for selection)
     
     // li
     
-    li.innerHTML = '<button onclick="pathEdit(' + i + ')">Edit</button>' + 
+    li.innerHTML = '<button onclick="setImagePath(' + i + ')">Edit</button>' + 
                    '<span style="margin-left: 0.5em;"> ' + file.path + '</span>';
     
     list.appendChild(li);
@@ -185,31 +186,77 @@ function outPathList() { // Create a list, showing files (allows for selection)
   
 }
 
-function pathEdit(fileI) { // Select image for editing
+function setImagePath(pos) { // Select image for editing
   
   // Elems
   
-  let pathOutPos = document.getElementById('pathOutPos');
+  let outPos = document.getElementById('pathOutPos');
   
   let editSrc = document.getElementById('editSrc');
+  let editPage = document.getElementById('editPage');
   let editDate = document.getElementById('editDate');
+  let editTags = document.getElementById('editTags');
   
   // Variables
   
-  if(fileI < 0) fileI = 0;
-  if(fileI >= files.length) fileI = files.length - 1;
+  if(pos < 0) pos = 0;
+  if(pos >= files.length) pos = files.length - 1;
   
-  currentFile = fileI;
+  currentPathPos = pos;
   
   // Set
   
-  setDisplay(files[fileI].path, 'pathDisplay');
-  pathOutPos.innerText = '' + (currentFile + 1) + 
-                         '. ' + files[fileI].path;
+  setDisplay(files[pos].path, 'pathDisplay');
+  outPos.innerText = '' + (pos + 1) + 
+                     '. ' + files[pos].path;
   
-  editSrc.value = files[fileI].path;
-  editDate.value = files[fileI].date;
-                         
+  editSrc.value = files[pos].path;
+  editDate.value = files[pos].date;
+  
+  // Set values from allSet if listed
+  
+  if(allSet[files[pos].path]) {
+    
+    let item = allSet[files[pos].path];
+    
+    editPage.value = item.page;
+    editDate.value = item.date;
+    
+    // Tag str
+    
+    let tagStr = '';
+    
+    for(tag of item.tags) {
+      tagStr = tagStr + tag + ' ';
+    }
+    
+    editTags.value = tagStr
+    
+  }
+  
+}
+
+function setImageSrch(pos) { // Select image for search
+  
+  // Elems
+  
+  let outPos = document.getElementById('srchOutPos');
+  
+  // Variables
+  
+  let outputArr = Array.from(outputSet);
+  
+  if(pos < 0) pos = 0;
+  if(pos >= outputArr.length) pos = outputArr.length - 1;
+  
+  currentSrchPos = pos;
+  
+  // Set
+  
+  setDisplay(outputArr[pos].src, 'srchDisplay');
+  outPos.innerText = '' + (pos + 1) + 
+                     '. ' + outputArr[pos].src;
+  
 }
 
 function save() { // Save allSet to localStorage
@@ -275,6 +322,8 @@ function outSrchList() { // Output search list
   
   list.innerHTML = '';
   
+  let i = 0;
+  
   outputSet.forEach(function(item) {
     
     // Variables
@@ -284,7 +333,7 @@ function outSrchList() { // Output search list
     
     // li
     
-    li.innerHTML = '<button onclick="setDisplay(\'' + item.src + '\', \'srchDisplay\');">Display</button>' + 
+    li.innerHTML = '<button onclick="setImageSrch(' + i + ');">Display</button>' + 
                    '<br>' + item.src + 
                    '<br>Page: <a href="' + item.page + '" target="_blank">' + item.page + '</a>' + 
                    '<br>Date: ' + item.date + 
@@ -297,6 +346,8 @@ function outSrchList() { // Output search list
     }
     
     list.appendChild(li);
+    
+    i++;
     
   });
   

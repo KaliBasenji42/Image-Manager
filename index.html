@@ -66,8 +66,8 @@
   </div><br>
   
   <div id="pathOutPos">#. ___</div><br>
-  <button onclick="pathEdit(currentFile - 1);" style="margin-left: 1em; margin-right: 1em;"><</button>
-  <button onclick="pathEdit(currentFile + 1);" style="margin-left: 1em; margin-right: 1em;">></button><br>
+  <button onclick="setImagePath(currentPathPos - 1);" style="margin-left: 1em; margin-right: 1em;"><</button>
+  <button onclick="setImagePath(currentPathPos + 1);" style="margin-left: 1em; margin-right: 1em;">></button><br>
   
   <h3>Edit Item</h3>
   
@@ -181,6 +181,10 @@
   <div class="imgCont">
     <iframe id="srchDisplay"></iframe>
   </div><br>
+  
+  <div id="srchOutPos">#. ___</div><br>
+  <button onclick="setImageSrch(currentSrchPos - 1);" style="margin-left: 1em; margin-right: 1em;"><</button>
+  <button onclick="setImageSrch(currentSrchPos + 1);" style="margin-left: 1em; margin-right: 1em;">></button><br>
   
 </body>
 
