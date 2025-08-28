@@ -357,6 +357,17 @@ function outSrchList() { // Output search list
   
 }
 
+function clearOutput() {
+  
+  outputSet.clear();
+  
+  resultsQuant = document.getElementById('resultsQuant');
+  resultsQuant.innerText = 'Results: ' + outputSet.size;
+  
+  console.log('Cleared outputSet');
+  
+}
+
 function clrList(id) { // Clear HTML list
   
   let list = document.getElementById(id);
