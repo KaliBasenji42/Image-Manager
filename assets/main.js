@@ -547,7 +547,7 @@ document.addEventListener('DOMContentLoaded', function() {
       let obj = {
         page: document.getElementById('editPage').value,
         date: document.getElementById('editDate').value,
-        tags: document.getElementById('editTags').value.split(' ')
+        tags: document.getElementById('editTags').value.split(' ').filter(item => item !== "")
       };
       
       allSet[src] = obj;
@@ -591,7 +591,7 @@ document.addEventListener('DOMContentLoaded', function() {
       let obj = {
         page: document.getElementById('editPage').value,
         date: document.getElementById('editDate').value,
-        tags: document.getElementById('editTags').value.split(' ')
+        tags: document.getElementById('editTags').value.split(' ').filter(item => item !== "")
       };
       
       allSet[src] = obj;
