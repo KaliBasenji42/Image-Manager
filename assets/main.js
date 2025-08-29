@@ -191,6 +191,7 @@ function setImagePath(pos) { // Select image for editing
   // Elems
   
   let outPos = document.getElementById('pathOutPos');
+  let editOut = document.getElementById('editOut');
   
   let editSrc = document.getElementById('editSrc');
   let editPage = document.getElementById('editPage');
@@ -212,6 +213,10 @@ function setImagePath(pos) { // Select image for editing
   
   editSrc.value = files[pos].path;
   editDate.value = files[pos].date;
+  
+  // Reset Edit Form Out
+  
+  editOut.innerHTML = "... Awaiting Input";
   
   // Set values from allSet if listed
   
@@ -756,6 +761,24 @@ document.addEventListener('DOMContentLoaded', function() {
   
 });
 
+document.addEventListener('keydown', function() {
+  
+  // Edit form keys
+  
+  let pathBindArrows = document.getElementById('pathBindArrows').checked;
+  
+  if(event.key == 'ArrowLeft' && pathBindArrows) setImagePath(currentPathPos - 1);
+  if(event.key == 'ArrowRight' && pathBindArrows) setImagePath(currentPathPos + 1);
+  
+  // Search out keys
+  
+  let srchBindArrows = document.getElementById('srchBindArrows').checked;
+  
+  if(event.key == 'ArrowLeft' && srchBindArrows) setImageSrch(currentSrchPos - 1);
+  if(event.key == 'ArrowRight' && srchBindArrows) setImageSrch(currentSrchPos + 1);
+  
+});
+
 // :P
 
 document.addEventListener('keypress', function() {
@@ -779,12 +802,12 @@ function spin() {
 }
 
 document.addEventListener('keypress', function() {
-    if(event.key == trigger && run) {
-        run = false;
-        spin();
-        window.setTimeout(spin, 5 * 1000);
-        window.setTimeout(function runTrue(){
-            run = true;
-        }, 5 * 1000 * 2);
-    }
+  if(event.key == trigger && run) {
+    run = false;
+    spin();
+    window.setTimeout(spin, 5 * 1000);
+    window.setTimeout(function runTrue(){
+        run = true;
+    }, 5 * 1000 * 2);
+  }
 });

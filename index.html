@@ -59,15 +59,17 @@
     
   </ol>
   
-  <button onclick="setDisplay('', 'pathDisplay');" style="margin-left: 1em; margin-right: 1em;">Clear Image</button><br><br>
+  <button onclick="setDisplay('', 'pathDisplay')" style="margin-left: 1em; margin-right: 1em;">Clear Image</button><br><br>
   
   <div class="imgCont">
     <iframe id="pathDisplay"></iframe>
   </div><br>
   
   <div id="pathOutPos">#. ___</div><br>
-  <button onclick="setImagePath(currentPathPos - 1);" style="margin-left: 1em; margin-right: 1em;"><</button>
-  <button onclick="setImagePath(currentPathPos + 1);" style="margin-left: 1em; margin-right: 1em;">></button><br>
+  <button onclick="setImagePath(currentPathPos - 1)" style="margin-left: 1em; margin-right: 1em;"><</button>
+  <button onclick="setImagePath(currentPathPos + 1)" style="margin-left: 1em; margin-right: 1em;">></button><br><br>
+  <label for="pathBindArrows">Bind to arrow keys?</label>
+  <input type="checkbox" id="pathBindArrows" name="pathBindArrows">
   
   <h3>Edit Item</h3>
   
@@ -102,9 +104,9 @@
     Download: Downloads allSet as JSON<br>
   </p>
   
-  <button style="margin-left: 1em; margin-right: 1em;" onclick="save();">Save</button>
-  <button style="margin-left: 1em; margin-right: 1em;" onclick="load();">Load</button>
-  <button style="margin-left: 1em; margin-right: 1em;" onclick="download();">Download</button><br><br>
+  <button style="margin-left: 1em; margin-right: 1em;" onclick="save()">Save</button>
+  <button style="margin-left: 1em; margin-right: 1em;" onclick="load()">Load</button>
+  <button style="margin-left: 1em; margin-right: 1em;" onclick="download()">Download</button><br><br>
   
   <output id="saveOut">... Awaiting Input</output><br><br>
   
@@ -169,22 +171,24 @@
   
   <p id="resultsQuant">Results: 0</p>
   
-  <button onclick="outSrchList();" style="margin-left: 1em; margin-right: 1em;">Output List</button>
-  <button onclick="clrList('srchList');" style="margin-left: 1em; margin-right: 1em;">Clear List</button><br>
+  <button onclick="outSrchList()" style="margin-left: 1em; margin-right: 1em;">Output List</button>
+  <button onclick="clrList('srchList')" style="margin-left: 1em; margin-right: 1em;">Clear List</button><br>
   
   <ol id="srchList">
     
   </ol>
   
-  <button onclick="setDisplay('', 'srchDisplay');" style="margin-left: 1em; margin-right: 1em;">Clear Image</button><br><br>
+  <button onclick="setDisplay('', 'srchDisplay')" style="margin-left: 1em; margin-right: 1em;">Clear Image</button><br><br>
   
   <div class="imgCont">
     <iframe id="srchDisplay"></iframe>
   </div><br>
   
   <div id="srchOutPos">#. ___</div><br>
-  <button onclick="setImageSrch(currentSrchPos - 1);" style="margin-left: 1em; margin-right: 1em;"><</button>
-  <button onclick="setImageSrch(currentSrchPos + 1);" style="margin-left: 1em; margin-right: 1em;">></button><br>
+  <button onclick="setImageSrch(currentSrchPos - 1)" style="margin-left: 1em; margin-right: 1em;"><</button>
+  <button onclick="setImageSrch(currentSrchPos + 1)" style="margin-left: 1em; margin-right: 1em;">></button><br><br>
+  <label for="srchBindArrows">Bind to arrow keys?</label>
+  <input type="checkbox" id="srchBindArrows" name="srchBindArrows"><br>
   <br>
   
   <div id="srchOutInfo">
