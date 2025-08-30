@@ -149,12 +149,12 @@ function outUsage() { // Output localStorage usage
   
   // Text
   
-  frac = usage/quota;
-  percent = frac * 100;
+  let frac = usage/quota;
+  let percent = frac * 100;
   
   storageUsage.innerHTML = 'localStorage: ' + numForm(usage) + 
                            ' Bytes / ' + numForm(quota) + 
-                           ' Bytes (' + Math.floor(percent) + '%)';
+                           ' Bytes (' +(Math.floor(percent * 1000) / 1000) + '%)';
   
 }
 
