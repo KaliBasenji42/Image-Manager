@@ -318,7 +318,7 @@ function download() { // For downloading allSet
   
   let linkElem = document.getElementById('downloadLink'); // Download Link elem
   
-  let allSetStr = JSON.stringify(allSet, null, 2);
+  let allSetStr = JSON.stringify(allSet, null, 2); // Pretty String
   
   let blob = new Blob([allSetStr], {type: 'application/json'}); // Blob
   
@@ -352,7 +352,7 @@ function outSrchList() { // Output search list
     
     // li
     
-    li.innerHTML = '<button onclick="setImageSrch(' + i + ');">Display</button>' + item.src;
+    li.innerHTML = '<button onclick="setImageSrch(' + i + ');">Display</button> ' + item.src;
     
     list.appendChild(li);
     
@@ -386,6 +386,55 @@ function setDisplay(src, id) { // Set the .src property of an elem.
   let display = document.getElementById(id);
   
   display.src = src;
+  
+}
+
+function listAllSet(clear = false) {
+  
+  let listElem = document.getElementById('listAllSet'); // Element
+  
+  if(clear) { // If clear
+    listElem.innerHTML = ''; 
+    return
+  }
+  
+  let allSetStr = JSON.stringify(allSet, null, 2); // Pretty String
+  
+  listElem.innerText = allSetStr; // Out
+  
+}
+
+function listTags(clear = false) {
+  
+  // Variables
+  
+  let listElem = document.getElementById('tagsList'); // Element
+  let tagsSet = new Set;
+  let tagsArr = [];
+  
+  // If clear
+  
+  if(clear) {
+    listElem.innerHTML = ''; 
+    return
+  }
+  
+  // Set (to Prevent Duplicates)
+  
+  for(let item in allSet) {
+    for(let tag of allSet[item].tags) tagsSet.add(tag);
+  }
+  
+  // Array (to Sort)
+  
+  for(let tag of tagsSet) tagsArr.push(tag);
+  tagsArr.sort();
+  
+  // Output
+  
+  for(let tag of tagsArr) {
+    listElem.innerHTML += tag + '<br>';
+  }
   
 }
 
@@ -693,7 +742,7 @@ document.addEventListener('DOMContentLoaded', function() {
           
           let withinDate = (beforeChecked && (beforeDate > objDate)) || (afterChecked && (afterDate < objDate));
           
-          console.log('withinDate: ' + withinDate);
+          //console.log('withinDate: ' + withinDate);
           
           if(hasAnyTags(obj, tags) || withinDate) outputSet.delete(obj);
           
