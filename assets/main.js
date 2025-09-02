@@ -400,6 +400,7 @@ function listAllSet(clear = false) {
   
   let allSetStr = JSON.stringify(allSet, null, 2); // Pretty String
   
+  listElem.innerText = ''; // Clear
   listElem.innerText = allSetStr; // Out
   
 }
@@ -431,6 +432,8 @@ function listTags(clear = false) {
   tagsArr.sort();
   
   // Output
+  
+  listElem.innerText = ''; // Clear
   
   for(let tag of tagsArr) {
     listElem.innerHTML += tag + '<br>';
