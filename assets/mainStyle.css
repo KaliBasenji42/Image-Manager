@@ -59,6 +59,64 @@ footer > div {
   object-fit: contain;
 }
 
+/* Quick Tagging */
+
+#greyout {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  
+  background-color: rgba(64, 64, 64, 0.5);
+  z-index: 1;
+}
+
+#greyout > * {
+  position: fixed;
+  
+  padding: 1rem;
+  
+  z-index: 2;
+}
+
+#greyout > * > * {
+  width: calc(100% - 2rem);
+  height: calc(100% - 2rem);
+}
+
+#greyout > #img {
+  top: 0;
+  left: 0;
+  width: 80vw;
+  height: 60vh;
+}
+
+#greyout > #list {
+  top: 0;
+  left: 80vw;
+  width: 20vw;
+  height: 60vh;
+}
+
+#greyout > #ctrl {
+  top: 60vh;
+  left: 0;
+  width: 20vw;
+  height: 40vh;
+}
+
+#greyout > #tags {
+  top: 60vh;
+  left: 20vw;
+  width: 80vw;
+  height: 40vh;
+}
+
+#greyout > #list > div, #greyout > #ctrl > div {
+  overflow: scroll;
+}
+
 /* Media */
 
 @media (max-width: 600px) {

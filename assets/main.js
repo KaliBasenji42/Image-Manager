@@ -8,6 +8,8 @@ let files = []; // Files in folder
 let currentPathPos = -1; // Index of files in folder for edit
 let currentSrchPos = -1; // Index of output for search
 
+let quickImgPath = ''; // Image path for Quick Tag Editing
+
 // Functions
 
 function strToArray(str, div = ' ') { // Str --> Array
@@ -235,7 +237,7 @@ function setImagePath(pos) { // Select image for editing
       tagStr = tagStr + tag + ' ';
     }
     
-    editTags.value = tagStr
+    editTags.value = tagStr;
     
   }
   
@@ -438,6 +440,69 @@ function listTags(clear = false) {
   for(let tag of tagsArr) {
     listElem.innerHTML += tag + '<br>';
   }
+  
+}
+
+function quickLoad() { // Load Quick Tag Editing View
+  
+  document.getElementById('greyout').style.display = 'block';
+  
+  // Load image
+  
+  quickImgPath = document.getElementById('pathDisplay').src;
+  
+  setDisplay(quickImgPath, 'quickDisplay');
+  
+  // Load tags
+  
+  let qTags = document.querySelector('#greyout > #tags > textarea');
+  qTags.value = document.getElementById('editTags').value;
+  
+  // Load All Tags List
+  
+  quickListTags();
+  
+}
+
+function quickListTags() { // List all Tags for Quick Tag Editing View
+  
+  // Variables
+  
+  let listElem = document.querySelector('#greyout > #list > div'); // Element
+  let tagsSet = new Set;
+  let tagsArr = [];
+  
+  // Set (to Prevent Duplicates)
+  
+  for(let item in allSet) {
+    for(let tag of allSet[item].tags) tagsSet.add(tag);
+  }
+  
+  // Array (to Sort)
+  
+  for(let tag of tagsSet) tagsArr.push(tag);
+  tagsArr.sort();
+  
+  // Output
+  
+  listElem.innerText = ''; // Clear
+  
+  for(let tag of tagsArr) {
+    listElem.innerHTML += tag + '<br>';
+  }
+  
+}
+
+function quickExit(save = true) { // Exit Quick Tag Editing View
+  
+  document.getElementById('greyout').style.display = 'none';
+  
+  if(!save) if(window.confirm('Don\'t Save?')) return
+  
+  // Set tags
+  
+  let qTags = document.querySelector('#greyout > #tags > textarea');
+  document.getElementById('editTags').value = qTags.value;
   
 }
 
