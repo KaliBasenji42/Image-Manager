@@ -514,9 +514,9 @@ function quickListTags() { // List all Tags for Quick Tag Editing View
 
 function quickExit(save = true) { // Exit Quick Tag Editing View
   
-  document.getElementById('greyout').style.display = 'none';
-  
   if(!save) if(window.confirm('Don\'t Save?')) return
+  
+  document.getElementById('greyout').style.display = 'none';
   
   // Set tags
   
