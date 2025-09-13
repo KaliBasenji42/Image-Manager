@@ -233,7 +233,7 @@ function setImagePath(pos) { // Select image for editing
     
     let tagStr = '';
     
-    for(tag of item.tags) {
+    for(let tag of item.tags) {
       tagStr = tagStr + tag + ' ';
     }
     
@@ -273,7 +273,7 @@ function setImageSrch(pos) { // Select image for search
                       'Date: ' + item.date + '<br><br>' + 
                       'Tags:<br>';
   
-  for(tag of item.tags) {
+  for(let tag of item.tags) {
     outInfo.innerHTML += tag + ' ';
   }
   
@@ -389,6 +389,10 @@ function setDisplay(src, id) { // Set the .src property of an elem.
   
   display.src = src;
   
+  // Quick Tagging View
+  
+  if(id == 'pathDisplay') quickImgPath = src;
+  
 }
 
 function listAllSet(clear = false) {
@@ -449,8 +453,6 @@ function quickLoad() { // Load Quick Tag Editing View
   
   // Load image
   
-  quickImgPath = document.getElementById('pathDisplay').src;
-  
   setDisplay(quickImgPath, 'quickDisplay');
   
   // Load tags
@@ -460,7 +462,7 @@ function quickLoad() { // Load Quick Tag Editing View
   
   // Load All Tags List
   
-  quickListTags();
+  document.querySelector('#greyout > #list > div').innerHTML = '<span style="text-align: center;">Waiting for Reload</span>'
   
 }
 
@@ -468,15 +470,21 @@ function quickListTags() { // List all Tags for Quick Tag Editing View
   
   // Variables
   
-  let listElem = document.querySelector('#greyout > #list > div'); // Element
+  let listElem = document.querySelector('#greyout > #list > div'); // Out Element
+  let tagsElem = document.querySelector('#greyout > #tags > textarea'); // Current Tags
   let tagsSet = new Set;
   let tagsArr = [];
+  
+  let savedTags = allSet[quickImgPath]['tags'];
+  let textareaTags = tagsElem.value.split(' ').filter(item => item !== '');
   
   // Set (to Prevent Duplicates)
   
   for(let item in allSet) {
     for(let tag of allSet[item].tags) tagsSet.add(tag);
   }
+  
+  for(let tag of textareaTags) tagsSet.add(tag);
   
   // Array (to Sort)
   
@@ -488,7 +496,18 @@ function quickListTags() { // List all Tags for Quick Tag Editing View
   listElem.innerText = ''; // Clear
   
   for(let tag of tagsArr) {
-    listElem.innerHTML += tag + '<br>';
+    
+    // Overlap Variables
+    
+    let inSaved = savedTags.includes(tag);
+    let inTextarea = textareaTags.includes(tag);
+    
+    let overlapHTML = '<span title="Not Listed">❌❌</span>';
+    if(inSaved && inTextarea) overlapHTML = '<span title="Listed in Both">✅☑️</span>';
+    else if(inSaved && !inTextarea) overlapHTML = '<span title="Only in Saved">✅❌</span>';
+    else if(!inSaved && inTextarea) overlapHTML = '<span title="Only in Textarea">❌☑️</span>';
+    
+    listElem.innerHTML += overlapHTML + tag + '<br>';
   }
   
 }
@@ -669,7 +688,7 @@ document.addEventListener('DOMContentLoaded', function() {
       let obj = {
         page: document.getElementById('editPage').value,
         date: document.getElementById('editDate').value,
-        tags: document.getElementById('editTags').value.split(' ').filter(item => item !== "")
+        tags: document.getElementById('editTags').value.split(' ').filter(item => item !== '')
       };
       
       allSet[src] = obj;
@@ -713,7 +732,7 @@ document.addEventListener('DOMContentLoaded', function() {
       let obj = {
         page: document.getElementById('editPage').value,
         date: document.getElementById('editDate').value,
-        tags: document.getElementById('editTags').value.split(' ').filter(item => item !== "")
+        tags: document.getElementById('editTags').value.split(' ').filter(item => item !== '')
       };
       
       allSet[src] = obj;
@@ -752,7 +771,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let excRadio = document.getElementById('exc');
     let fltRadio = document.getElementById('flt');
     
-    let tags = strToArray(document.getElementById('tagsSearch').value);
+    let tags = document.getElementById('tagsSearch').value.split(' ').filter(item => item !== '');
     
     let searchOut = document.getElementById('searchOut');
     

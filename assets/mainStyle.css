@@ -115,6 +115,7 @@ footer > div {
 
 #greyout > #list > div, #greyout > #ctrl > div {
   overflow: scroll;
+  white-space: nowrap;
 }
 
 /* Media */
