@@ -475,8 +475,10 @@ function quickListTags() { // List all Tags for Quick Tag Editing View
   let tagsSet = new Set;
   let tagsArr = [];
   
-  let savedTags = allSet[quickImgPath]['tags'];
+  let savedTags = []
   let textareaTags = tagsElem.value.split(' ').filter(item => item !== '');
+  
+  if(allSet[quickImgPath]) savedTags = allSet[quickImgPath]['tags'];
   
   // Set (to Prevent Duplicates)
   
