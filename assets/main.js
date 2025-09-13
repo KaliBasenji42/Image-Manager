@@ -516,7 +516,10 @@ function quickListTags() { // List all Tags for Quick Tag Editing View
 
 function quickExit(save = true) { // Exit Quick Tag Editing View
   
-  if(!save) if(window.confirm('Don\'t Save?')) return
+  if(!save) {
+    if(window.confirm('Don\'t Save?')) document.getElementById('greyout').style.display = 'none';
+    return
+  }
   
   document.getElementById('greyout').style.display = 'none';
   
