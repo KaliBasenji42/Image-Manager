@@ -1,4 +1,5 @@
 imgs/test
 index.json
-*.db
+images
 .Misc
+*.db

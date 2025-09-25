@@ -16,6 +16,12 @@ body {
 
 h1 {text-align: center;}
 
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  min-width: 1rem;
+}
+
 footer {
   position: absolute;
   left: 0;
@@ -38,6 +44,10 @@ footer > div {
 #srchList, #pathList, #listAllSet, #tagsList {
   overflow-x: scroll;
   max-height: 20em;
+}
+
+#lowTag {
+  background-color: rgb(255, 32, 32);
 }
 
 /* Classes */

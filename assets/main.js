@@ -416,7 +416,7 @@ function listTags(clear = false) {
   // Variables
   
   let listElem = document.getElementById('tagsList'); // Element
-  let tagsSet = new Set;
+  let tagsObj = {};
   let tagsArr = [];
   
   // If clear
@@ -426,23 +426,27 @@ function listTags(clear = false) {
     return
   }
   
-  // Set (to Prevent Duplicates)
+  // Loop through all tags
   
   for(let item in allSet) {
-    for(let tag of allSet[item].tags) tagsSet.add(tag);
+    for(let tag of allSet[item].tags) {
+      if(tagsObj[tag]) tagsObj[tag] ++; // If Exists, ++
+      else tagsObj[tag] = 1; // Else, new tag (1 instance)
+    }
   }
   
   // Array (to Sort)
   
-  for(let tag of tagsSet) tagsArr.push(tag);
+  for(let tag in tagsObj) tagsArr.push(tag);
   tagsArr.sort();
   
   // Output
   
-  listElem.innerText = ''; // Clear
+  listElem.innerHTML = '<tr><th>#</th><th>Tag</th></tr>'; // Clear
   
   for(let tag of tagsArr) {
-    listElem.innerHTML += tag + '<br>';
+    if(tagsObj[tag] == 1) listElem.innerHTML += '<tr><td id="lowTag">' + tagsObj[tag] + '</td><td>' + tag + '</td></tr>';
+    else listElem.innerHTML += '<tr><td>' + tagsObj[tag] + '</td><td>' + tag + '</td></tr>';
   }
   
 }
@@ -755,6 +759,44 @@ document.addEventListener('DOMContentLoaded', function() {
       if(error.message == '!mtch') editOut.innerHTML = '⚠️ Not in Set'
       
       console.log('Overwriting Error:');
+      console.log(error);
+      
+    }
+    
+  });
+  
+  editRmv.addEventListener('click', function() {
+    
+    try {
+      
+      editOut.innerHTML = '🔄 Removing';
+      editOut.start = Date.now();
+      
+      let src = document.getElementById('editSrc').value;
+      
+      let match = false;
+      
+      Object.keys(allSet).forEach(function(key) { // Match
+        if(key == src) match = true;
+      });
+      
+      if(!match) throw new Error('!mtch') // Throw with '!mtch' error
+      
+      delete allSet[src];
+      
+      editOut.innerHTML = '✅ Removed in ' + (Date.now() - editOut.start) + 'ms';
+      
+      console.log('Removed:');
+      console.log(src);
+      
+    }
+    
+    catch(error) {
+      
+      editOut.innerHTML = '⚠️ Error Removing';
+      if(error.message == '!mtch') editOut.innerHTML = '⚠️ Not in Set'
+      
+      console.log('Removing Error:');
       console.log(error);
       
     }

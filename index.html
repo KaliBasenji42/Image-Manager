@@ -55,12 +55,12 @@
   <button onclick="listAllSet()" style="margin-left: 1em; margin-right: 1em;">List allSet</button>
   <button onclick="listAllSet(true)" style="margin-left: 1em; margin-right: 1em;">Clear</button>
   
-  <pre id="listAllSet"></pre>
+  <pre id="listAllSet" style="margin: 1rem;"></pre>
   
   <button onclick="listTags()" style="margin-left: 1em; margin-right: 1em;">List All Tags</button>
   <button onclick="listTags(clear)" style="margin-left: 1em; margin-right: 1em;">Clear</button>
   
-  <pre id="tagsList"></pre>
+  <table id="tagsList" style="margin: 1rem;"></table>
   
   <h2>Input</h2>
   
@@ -151,7 +151,7 @@
     Exclude: Remove objects from outputSet with any tag, or within date<br>
     Filter: Remove objects from outputSet without all tags, or outside date<br><br>
     
-    Note: outpoutSet will retain objects after file change, allSet resets when a different file is loaded.
+    Note: outputSet will retain objects after file change, allSet resets when a different file is loaded.
     
   </p>
   
