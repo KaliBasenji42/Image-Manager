@@ -1,6 +1,4 @@
-<style>
-  img {max-height: 32rem; max-width: 80%}
-</style>
+<link href="assets/mdStyle.css" rel="stylesheet"></link>
 
 # Image-Manager
 
