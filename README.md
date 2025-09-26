@@ -7,6 +7,7 @@ HTML File that accesses/edits a JSON file that tags and organizes images/media.
 ## File Structure
 
 <pre style="white-space: pre; overflow-x: scroll;">
+.
 ├── assets
 │   ├── areFilesLinked.js
 │   ├── icon.png
