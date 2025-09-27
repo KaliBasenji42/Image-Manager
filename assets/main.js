@@ -328,6 +328,16 @@ function download() { // For downloading allSet
   
 }
 
+function clearSave() { // For clearing localStorage
+  
+  if(!window.confirm('Clear localStorage?')) return
+  
+  localStorage.clear();
+  
+  outUsage();
+  
+}
+
 function outSrchList() { // Output search list
   
   if(outputSet.size > 100) { // Over 100 Warning
@@ -415,7 +425,7 @@ function listTags(clear = false) {
   
   // Variables
   
-  let listElem = document.getElementById('tagsList'); // Element
+  let listElem = document.querySelector('#tagsList > table'); // Element
   let tagsObj = {};
   let tagsArr = [];
   
@@ -961,6 +971,98 @@ document.addEventListener('keydown', function() {
   if(event.key == 'ArrowRight' && srchBindArrows) setImageSrch(currentSrchPos + 1);
   
 });
+
+// Theme
+
+let sheet = new CSSStyleSheet();
+document.adoptedStyleSheets.push(sheet);
+
+let styleSheetStrings = {
+  'dark': `
+body {
+  color: rgb(255, 255, 255);
+  background-color: rgb(0, 0, 0);
+  background-image: none;
+  background-image: 
+    linear-gradient(135deg, rgb(0, 0, 0) 60%, rgb(0, 0, 16), rgb(16, 0, 16)),
+    linear-gradient(90deg, rgb(0, 0, 0) 60%, rgb(0, 0, 16), rgb(16, 0, 16));
+}
+
+table {
+  color: rgb(225, 225, 225);
+  background-color: rgb(32, 32, 32) !important;
+}
+  `,
+  'light': `
+body {
+  color: rgb(0, 0, 0);
+  background-color: rgb(224, 224, 224);
+  background-image: 
+    linear-gradient(135deg, rgb(224, 224, 224) 60%, rgb(232, 232, 224), rgb(232, 224, 224)),
+    linear-gradient(90deg, rgb(224, 224, 224) 60%, rgb(232, 232, 224), rgb(232, 224, 224));
+}
+
+table {
+  color: rgb(0, 0, 0);
+  background-color: rgb(224, 224, 224);
+}
+  `
+};
+
+function updateTheme() {
+  
+  let theme = localStorage.getItem('theme');
+  
+  sheet.replace(
+    styleSheetStrings[theme]
+  );
+  
+}
+
+function nextTheme(add) {
+  
+  // Variables
+  
+  let themeKeys = Object.keys(styleSheetStrings);
+  
+  let currentTheme = localStorage.getItem('theme');
+  let currentPos = themeKeys.indexOf(currentTheme);
+  if(currentPos == -1) currentPos = 0;
+  
+  let themeButton = document.getElementById('themeButton');
+  
+  // Update Theme
+  
+  currentPos = (currentPos + add) % themeKeys.length;
+  
+  localStorage.setItem('theme', themeKeys[currentPos]);
+  
+  updateTheme();
+  
+  // Update themeButton Title
+  
+  let titleStr = 'Change Theme:\n';
+  
+  for(let i = 0; i < themeKeys.length; i++) {
+    
+    if(i == currentPos) titleStr += '✅ ';
+    else titleStr += '⚫ ';
+    
+    titleStr += themeKeys[i] + '\n';
+    
+  }
+  
+  themeButton.title = titleStr;
+  
+  // Output Storage
+  
+  outUsage();
+  
+}
+
+updateTheme();
+
+setTimeout(nextTheme, 10, 0);
 
 // :P
 

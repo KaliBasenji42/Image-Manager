@@ -60,7 +60,7 @@
   <button onclick="listTags()" style="margin-left: 1em; margin-right: 1em;">List All Tags</button>
   <button onclick="listTags(clear)" style="margin-left: 1em; margin-right: 1em;">Clear</button>
   
-  <table id="tagsList" style="margin: 1rem;"></table>
+  <div id="tagsList" style="margin: 1rem;"><table></table></div>
   
   <h2>Input</h2>
   
@@ -131,7 +131,8 @@
   
   <button style="margin-left: 1em; margin-right: 1em;" onclick="save()">Save</button>
   <button style="margin-left: 1em; margin-right: 1em;" onclick="load()">Load</button>
-  <button style="margin-left: 1em; margin-right: 1em;" onclick="download()">Download</button><br><br>
+  <button style="margin-left: 1em; margin-right: 1em;" onclick="download()">Download</button>
+  <button style="margin-left: 1em; margin-right: 1em;" onclick="clearSave()">Clear</button><br><br>
   
   <output id="saveOut">... Awaiting Input</output><br><br>
   
@@ -248,6 +249,8 @@
     <a href="https://github.com/KaliBasenji42" target="_blank">KaliBasenji42's Github</a>
   </div>
 </footer>
+
+<button id="themeButton" onclick="nextTheme(1)" title="Change Theme">◪</button>
 
 </html>
 
