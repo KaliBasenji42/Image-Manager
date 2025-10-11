@@ -68,20 +68,18 @@
   
   <p>
     Select the a sub-folder in the repository for this HTML file.
-    Or a single file or path.
+    Or file/URL paths, separated with line breaks.
   </p>
   
   <form id="pathForm">
     <input type="radio" name="pathRadio" id="folderRadio" checked="true">
     <input type="file" id="folderInp" name="folderInp" value="Pick Folder" webkitdirectory="" multiple=""><br>
     
-    <input type="radio" name="pathRadio" id="fileRadio">
-    <input type="file" id="filePathInp" name="filePathInp"><br>
+    <input type="radio" name="pathRadio" id="listRadio">
+    <label for="listRadio">File Paths/URLs:</label><br>
+    <textarea id="listPathInp" style="width: 100%; height: 6rem;"></textarea><br>
     
-    <input type="radio" name="pathRadio" id="urlRadio">
-    <label for="urlPathInp">URL: </label>
-    <input type="text" id="urlPathInp"><br>
-    
+    <br>
     <input type="submit" value="Submit"><br>
     
     <output id="pathOut">... Awaiting Input</output>

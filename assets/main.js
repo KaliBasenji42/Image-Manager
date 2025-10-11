@@ -214,7 +214,7 @@ function setImagePath(pos) { // Select image for editing
                      '. ' + files[pos].path;
   
   editSrc.value = files[pos].path;
-  editDate.value = files[pos].date;
+  if(files[pos].date != '') editDate.value = files[pos].date;
   
   // Reset Edit Form Out
   
@@ -637,22 +637,27 @@ document.addEventListener('DOMContentLoaded', function() {
     
     event.preventDefault();
     
-    // Radio
+    // Variables
     
-    let selected = [
-      document.getElementById('folderRadio').checked,
-      document.getElementById('fileRadio').checked,
-      document.getElementById('urlRadio').checked,
-    ];
+    let folder = [];
     
-    // Folder
+    // Each Radio
     
-    if(selected[0]) {
+    if(document.getElementById('folderRadio').checked) {
+      folder = document.getElementById('folderInp').files;
+    }
     
+    if(document.getElementById('listRadio').checked) {
+      for(const line of document.getElementById('listPathInp').value.split('\n')) {
+        folder.push({lastModified: '', webkitRelativePath: line})
+      }
+    }
+    
+    // Generate
+  
     try {
       
-      let folder = document.getElementById('folderInp').files;
-      console.log(folder);
+      //console.log(folder);
       
       pathOut.innerHTML = '🔄 Processing';
       pathOut.start = Date.now();
@@ -661,15 +666,21 @@ document.addEventListener('DOMContentLoaded', function() {
       
       for (let rawFile of folder) {
         
-        let date = new Date(rawFile.lastModified);
+        let dateStr = '';
         
-        let year = '' + date.getFullYear();
-        let month = '' + (date.getMonth() + 1);
-        if(month.length < 2) month = '0' + month;
-        let day = '' + date.getDate();
-        if(day.length < 2) day = '0' + day;
-        
-        let dateStr = year + '-' + month + '-' + day;
+        if(rawFile.lastModified != '') {
+          
+          let date = new Date(rawFile.lastModified);
+          
+          let year = '' + date.getFullYear();
+          let month = '' + (date.getMonth() + 1);
+          if(month.length < 2) month = '0' + month;
+          let day = '' + date.getDate();
+          if(day.length < 2) day = '0' + day;
+          
+          dateStr = year + '-' + month + '-' + day;
+          
+        }
         
         let file = {
           'path': rawFile.webkitRelativePath,
@@ -699,8 +710,6 @@ document.addEventListener('DOMContentLoaded', function() {
       console.log('Processing Error:');
       console.log(error);
       
-    }
-    
     }
     
   });
