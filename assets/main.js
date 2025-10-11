@@ -10,6 +10,8 @@ let currentSrchPos = -1; // Index of output for search
 
 let quickImgPath = ''; // Image path for Quick Tag Editing
 
+let wildcard = '*'; // Character used for wildcard search
+
 // Functions
 
 function strToArray(str, div = ' ') { // Str --> Array
@@ -74,6 +76,21 @@ function hasAnyTags(obj, tags) { // True if any tag matches (for search)
       
       if(objTag == tag) return true;
       
+      // Wildcard
+      
+      if(wildcard != '') {
+        
+        let wcStart = tag.startsWith(wildcard);
+        let wcEnd = tag.endsWith(wildcard);
+        
+        let cleanTag = tag.replaceAll(wildcard, '');
+        
+        if(wcStart && wcEnd && objTag.includes(cleanTag)) return true;
+        else if(wcStart && objTag.endsWith(cleanTag)) return true;
+        else if(wcEnd && objTag.startsWith(cleanTag)) return true; 
+        
+      }
+      
     }
     
   }
@@ -93,6 +110,21 @@ function hasAllTags(obj, tags) { // True if all tags match (for search)
     for(const objTag of obj.tags) {
       
       if(objTag == tag) match = true;
+      
+      // Wildcard
+      
+      if(wildcard != '') {
+        
+        let wcStart = tag.startsWith(wildcard);
+        let wcEnd = tag.endsWith(wildcard);
+        
+        let cleanTag = tag.replaceAll(wildcard, '');
+        
+        if(wcStart && wcEnd && objTag.includes(cleanTag)) match = true;
+        else if(wcStart && objTag.endsWith(cleanTag)) match = true;
+        else if(wcEnd && objTag.startsWith(cleanTag)) match = true; 
+        
+      }
       
     }
     
@@ -850,6 +882,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let incRadio = document.getElementById('inc');
     let excRadio = document.getElementById('exc');
     let fltRadio = document.getElementById('flt');
+    
+    wildcard = document.getElementById('wildcard').value.slice(0,1);
     
     let tags = document.getElementById('tagsSearch').value.split(' ').filter(item => item !== '');
     

@@ -53,12 +53,12 @@
   </p>
   
   <button onclick="listAllSet()" style="margin-left: 1em; margin-right: 1em;">List allSet</button>
-  <button onclick="listAllSet(true)" style="margin-left: 1em; margin-right: 1em;">Clear</button>
+  <button onclick="clrList('listAllSet')" style="margin-left: 1em; margin-right: 1em;">Clear</button>
   
   <pre id="listAllSet" style="margin: 1rem;"></pre>
   
   <button onclick="listTags()" style="margin-left: 1em; margin-right: 1em;">List All Tags</button>
-  <button onclick="listTags(clear)" style="margin-left: 1em; margin-right: 1em;">Clear</button>
+  <button onclick="clrList('tagsList')" style="margin-left: 1em; margin-right: 1em;">Clear</button>
   
   <div id="tagsList" style="margin: 1rem;"><table></table></div>
   
@@ -73,6 +73,7 @@
   
   <form id="pathForm">
     <input type="radio" name="pathRadio" id="folderRadio" checked="true">
+    <label for="folderRadio">Folder: </label>
     <input type="file" id="folderInp" name="folderInp" value="Pick Folder" webkitdirectory="" multiple=""><br>
     
     <input type="radio" name="pathRadio" id="listRadio">
@@ -80,7 +81,8 @@
     <textarea id="listPathInp" style="width: 100%; height: 6rem;"></textarea><br>
     
     <br>
-    <input type="submit" value="Submit"><br>
+    <input type="submit" value="Submit" style="margin-left: 1em; margin-right: 1em;">
+    <input type="button" value="Clear" onclick="clrList('pathList')" style="margin-left: 1em; margin-right: 1em;"><br><br>
     
     <output id="pathOut">... Awaiting Input</output>
   </form>
@@ -159,6 +161,11 @@
     Exclude: Remove objects from outputSet with any tag, or within date<br>
     Filter: Remove objects from outputSet without all tags, or outside date<br><br>
     
+    Wildcard: Put at the start or end of a search word to include all tags that start/end with that word:<br>
+    "*world": All tags that end in "world"<br>
+    "hello*": All tags that start with "hello"<br>
+    "*llo*": All tags that contain "llo"<br><br>
+    
     Note: outputSet will retain objects after file change, allSet resets when a different file is loaded.
     
   </p>
@@ -188,6 +195,9 @@
     <label for="exc">Exclude</label><br>
     <input type="radio" id="flt" name="func">
     <label for="flt">Filter</label><br><br>
+    
+    <label for="wildcard">Wildcard Character (Blank: Disable):</label>
+    <input type="text" id="wildcard" name="wildcard" style="width: 2rem;" value="*"><br><br>
     
     <label>Tags</label><br>
     <input type="search" id="tagsSearch" style="width:15em"><br><br>
