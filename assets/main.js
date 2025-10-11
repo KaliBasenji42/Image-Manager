@@ -637,6 +637,18 @@ document.addEventListener('DOMContentLoaded', function() {
     
     event.preventDefault();
     
+    // Radio
+    
+    let selected = [
+      document.getElementById('folderRadio').checked,
+      document.getElementById('fileRadio').checked,
+      document.getElementById('urlRadio').checked,
+    ];
+    
+    // Folder
+    
+    if(selected[0]) {
+    
     try {
       
       let folder = document.getElementById('folderInp').files;
@@ -687,6 +699,8 @@ document.addEventListener('DOMContentLoaded', function() {
       console.log('Processing Error:');
       console.log(error);
       
+    }
+    
     }
     
   });
