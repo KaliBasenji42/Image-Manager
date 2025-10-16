@@ -462,7 +462,7 @@ function listTags(clear = false) {
   
   // Variables
   
-  let listElem = document.querySelector('#tagsList > table'); // Element
+  let listElem = document.querySelector('#tagsList'); // Element
   let tagsObj = {};
   let tagsArr = [];
   

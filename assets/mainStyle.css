@@ -39,7 +39,7 @@ footer > div {
 
 /* IDs */
 
-#srchList, #pathList, #listAllSet, #tagsList {
+.list {
   overflow-x: scroll;
   max-height: 20rem;
 }

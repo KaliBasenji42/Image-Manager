@@ -55,12 +55,12 @@
   <button onclick="listAllSet()" style="margin-left: 1em; margin-right: 1em;">List allSet</button>
   <button onclick="clrList('listAllSet')" style="margin-left: 1em; margin-right: 1em;">Clear</button>
   
-  <pre id="listAllSet" style="margin: 1rem;"></pre>
+  <pre id="listAllSet" class="list" style="margin: 1rem;"></pre>
   
   <button onclick="listTags()" style="margin-left: 1em; margin-right: 1em;">List All Tags</button>
   <button onclick="clrList('tagsList')" style="margin-left: 1em; margin-right: 1em;">Clear</button>
   
-  <div id="tagsList" style="margin: 1rem;"><table></table></div>
+  <div class="list" style="margin: 1rem;"><table id="tagsList"></table></div>
   
   <h2>Input</h2>
   
@@ -90,8 +90,7 @@ images/folder/file2.jpg</textarea><br>
     <output id="pathOut">... Awaiting Input</output>
   </form>
   
-  <ol id="pathList">
-    
+  <ol id="pathList" class="list">
   </ol>
   
   <button onclick="setDisplay('', 'pathDisplay')" style="margin-left: 1em; margin-right: 1em;">Clear Image</button><br><br>
@@ -221,8 +220,7 @@ images/folder/file2.jpg</textarea><br>
   <button onclick="outSrchList()" style="margin-left: 1em; margin-right: 1em;">Output List</button>
   <button onclick="clrList('srchList')" style="margin-left: 1em; margin-right: 1em;">Clear List</button><br>
   
-  <ol id="srchList">
-    
+  <ol id="srchList" class="list">
   </ol>
   
   <button onclick="setDisplay('', 'srchDisplay')" style="margin-left: 1em; margin-right: 1em;">Clear Image</button><br><br>
