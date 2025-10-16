@@ -222,6 +222,8 @@ function outPathList() { // Create a list, showing files (allows for selection)
 
 function setImagePath(pos) { // Select image for editing
   
+  if(files.length == 0) return; // Do nothing if there is nothing
+  
   // Elems
   
   let outPos = document.getElementById('pathOutPos');
@@ -277,6 +279,8 @@ function setImagePath(pos) { // Select image for editing
 
 function setImageSrch(pos) { // Select image for search
   
+  if(outputSet.size == 0) return; // Do nothing if there is nothing
+  
   // Elems
   
   let outPos = document.getElementById('srchOutPos');
@@ -291,21 +295,21 @@ function setImageSrch(pos) { // Select image for search
   
   currentSrchPos = pos;
   
-  let item = outputArr[pos];
+  let key = outputArr[pos];
   
   // Set
   
-  setDisplay(item.src, 'srchDisplay');
+  setDisplay(key, 'srchDisplay');
   outPos.innerText = '' + (pos + 1) + 
-                     '. ' + item.src;
+                     '. ' + key;
   
   // Set Info
   
-  outInfo.innerHTML = 'Page: <a href="' + item.page + '" target="_blank">' + item.page + '</a><br><br>' + 
-                      'Date: ' + item.date + '<br><br>' + 
+  outInfo.innerHTML = 'Page: <a href="' + allSet[key].page + '" target="_blank">' + allSet[key].page + '</a><br><br>' + 
+                      'Date: ' + allSet[key].date + '<br><br>' + 
                       'Tags:<br>';
   
-  for(let tag of item.tags) {
+  for(let tag of allSet[key].tags) {
     outInfo.innerHTML += tag + ' ';
   }
   
@@ -357,6 +361,7 @@ function download() { // For downloading allSet
   let blob = new Blob([allSetStr], {type: 'application/json'}); // Blob
   
   linkElem.href = URL.createObjectURL(blob); // Set URL
+  linkElem.download = 'index';
   
 }
 
@@ -387,7 +392,7 @@ function outSrchList() { // Output search list
   
   let i = 0;
   
-  outputSet.forEach(function(item) {
+  outputSet.forEach(function(key) {
     
     // Variables
     
@@ -396,7 +401,7 @@ function outSrchList() { // Output search list
     
     // li
     
-    li.innerHTML = '<button onclick="setImageSrch(' + i + ');">Display</button> ' + item.src;
+    li.innerHTML = '<button onclick="setImageSrch(' + i + ');">Display</button> ' + key;
     
     list.appendChild(li);
     
@@ -903,13 +908,12 @@ document.addEventListener('DOMContentLoaded', function() {
         Object.keys(allSet).forEach(function(key) {
           
           let obj = allSet[key];
-          obj.src = key;
           
           let objDate = strToInt(obj.date);
           
           let withinDate = (!beforeChecked || (beforeDate > objDate)) && (!afterChecked || (afterDate < objDate))
           
-          if(hasAnyTags(obj, tags) && withinDate) outputSet.add(obj);
+          if(hasAnyTags(obj, tags) && withinDate) outputSet.add(key);
           
         });
         
@@ -937,7 +941,6 @@ document.addEventListener('DOMContentLoaded', function() {
         Object.keys(allSet).forEach(function(key) {
           
           let obj = allSet[key];
-          obj.src = key;
           
           let objDate = strToInt(obj.date);
           
@@ -945,7 +948,7 @@ document.addEventListener('DOMContentLoaded', function() {
           
           //console.log('withinDate: ' + withinDate);
           
-          if(hasAnyTags(obj, tags) || withinDate) outputSet.delete(obj);
+          if(hasAnyTags(obj, tags) || withinDate) outputSet.delete(key);
           
         });
         
@@ -973,7 +976,6 @@ document.addEventListener('DOMContentLoaded', function() {
         Object.keys(allSet).forEach(function(key) {
           
           let obj = allSet[key];
-          obj.src = key;
           
           let objDate = strToInt(obj.date);
           
@@ -981,7 +983,7 @@ document.addEventListener('DOMContentLoaded', function() {
           
           console.log('withinDate: ' + withinDate);
           
-          if(!hasAllTags(obj, tags) || !withinDate) outputSet.delete(obj);
+          if(!hasAllTags(obj, tags) || !withinDate) outputSet.delete(key);
           
         });
         
