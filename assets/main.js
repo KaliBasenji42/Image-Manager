@@ -165,7 +165,7 @@ function getUsage() { // Get localStorage usage
   
   let usage = 0;
   
-  for(let key in localStorage) {
+  for(const key in localStorage) {
     if(localStorage.hasOwnProperty(key)) {
       item = localStorage.getItem(key);
       
@@ -275,7 +275,7 @@ function setImagePath(pos, last = false) { // Select image for editing
     
     let tagStr = '';
     
-    for(let tag of item.tags) {
+    for(const tag of item.tags) {
       tagStr = tagStr + tag + ' ';
     }
     
@@ -320,7 +320,7 @@ function setImageSrch(pos, last = false) { // Select image for search
                       'Date: ' + allSet[key].date + '<br><br>' + 
                       'Tags:<br>';
   
-  for(let tag of allSet[key].tags) {
+  for(const tag of allSet[key].tags) {
     outInfo.innerHTML += tag + ' ';
   }
   
@@ -486,8 +486,8 @@ function listTags(clear = false) {
   
   // Loop through all tags
   
-  for(let item in allSet) {
-    for(let tag of allSet[item].tags) {
+  for(const item in allSet) {
+    for(const tag of allSet[item].tags) {
       if(tagsObj[tag]) tagsObj[tag] ++; // If Exists, ++
       else tagsObj[tag] = 1; // Else, new tag (1 instance)
     }
@@ -495,14 +495,14 @@ function listTags(clear = false) {
   
   // Array (to Sort)
   
-  for(let tag in tagsObj) tagsArr.push(tag);
+  for(const tag in tagsObj) tagsArr.push(tag);
   tagsArr.sort();
   
   // Output
   
   listElem.innerHTML = '<tr><th>#</th><th>Tag</th></tr>'; // Clear
   
-  for(let tag of tagsArr) {
+  for(const tag of tagsArr) {
     if(tagsObj[tag] == 1) listElem.innerHTML += '<tr><td id="lowTag">' + tagsObj[tag] + '</td><td>' + tag + '</td></tr>';
     else listElem.innerHTML += '<tr><td>' + tagsObj[tag] + '</td><td>' + tag + '</td></tr>';
   }
@@ -544,22 +544,22 @@ function quickListTags() { // List all Tags for Quick Tag Editing View
   
   // Set (to Prevent Duplicates)
   
-  for(let item in allSet) {
-    for(let tag of allSet[item].tags) tagsSet.add(tag);
+  for(const item in allSet) {
+    for(const tag of allSet[item].tags) tagsSet.add(tag);
   }
   
-  for(let tag of textareaTags) tagsSet.add(tag);
+  for(const tag of textareaTags) tagsSet.add(tag);
   
   // Array (to Sort)
   
-  for(let tag of tagsSet) tagsArr.push(tag);
+  for(const tag of tagsSet) tagsArr.push(tag);
   tagsArr.sort();
   
   // Output
   
   listElem.innerText = ''; // Clear
   
-  for(let tag of tagsArr) {
+  for(const tag of tagsArr) {
     
     // Overlap Variables
     
