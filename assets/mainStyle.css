@@ -68,6 +68,11 @@ footer > div {
   object-fit: contain;
 }
 
+.marginBttn {
+  margin-left: 1em; 
+  margin-right: 1em;
+}
+
 /* Quick Tagging */
 
 #greyout {
@@ -124,6 +129,57 @@ footer > div {
 #greyout > #list > div, #greyout > #ctrl > div {
   overflow: scroll;
   white-space: nowrap;
+}
+
+/* Full Screen */
+
+#pathImgFull, #srchImgFull {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: scroll;
+  display: none;
+  
+  background-color: rgba(64, 64, 64, 0.75);
+  z-index: 1;
+}
+
+#pathImgFull > *, #srchImgFull > * {
+  position: absolute;
+  
+  z-index: 2;
+  
+  font-size: 2rem;
+}
+
+#pathDisplayFull, #srchDisplayFull {
+  top: 0.5rem;
+  left: 0.5rem;
+  width: calc(100vw - 1rem);
+  height: calc(80vh - 1rem);
+}
+
+.lFullBttn {
+  top: calc(80vh + 1rem);
+  left: 1rem;
+  width: calc(30vw - 2rem);
+  height: calc(20vh - 2rem);
+}
+
+.rFullBttn {
+  top: calc(80vh + 1rem);
+  right: 1rem;
+  width: calc(30vw - 2rem);
+  height: calc(20vh - 2rem);
+}
+
+.xFullBttn {
+  top: calc(80vh + 1rem);
+  left: calc(30vw + 1rem);
+  width: calc(40vw - 2rem);
+  height: calc(20vh - 2rem);
 }
 
 /* Theme */

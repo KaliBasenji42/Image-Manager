@@ -10,6 +10,11 @@ let currentSrchPos = -1; // Index of output for search
 
 let quickImgPath = ''; // Image path for Quick Tag Editing
 
+let fullScreenIDs = [
+  'pathImgFull',
+  'srchImgFull',
+];
+
 let wildcard = '*'; // Character used for wildcard search
 
 // Functions
@@ -220,7 +225,7 @@ function outPathList() { // Create a list, showing files (allows for selection)
   
 }
 
-function setImagePath(pos) { // Select image for editing
+function setImagePath(pos, last = false) { // Select image for editing
   
   if(files.length == 0) return; // Do nothing if there is nothing
   
@@ -236,6 +241,8 @@ function setImagePath(pos) { // Select image for editing
   
   // Variables
   
+  if(last) pos = files.length;
+  
   if(pos < 0) pos = 0;
   if(pos >= files.length) pos = files.length - 1;
   
@@ -244,6 +251,7 @@ function setImagePath(pos) { // Select image for editing
   // Set
   
   setDisplay(files[pos].path, 'pathDisplay');
+  setDisplay(files[pos].path, 'pathDisplayFull');
   outPos.innerText = '' + (pos + 1) + 
                      '. ' + files[pos].path;
   
@@ -277,7 +285,7 @@ function setImagePath(pos) { // Select image for editing
   
 }
 
-function setImageSrch(pos) { // Select image for search
+function setImageSrch(pos, last = false) { // Select image for search
   
   if(outputSet.size == 0) return; // Do nothing if there is nothing
   
@@ -290,6 +298,8 @@ function setImageSrch(pos) { // Select image for search
   
   let outputArr = Array.from(outputSet);
   
+  if(last) pos = outputArr.length;
+  
   if(pos < 0) pos = 0;
   if(pos >= outputArr.length) pos = outputArr.length - 1;
   
@@ -300,6 +310,7 @@ function setImageSrch(pos) { // Select image for search
   // Set
   
   setDisplay(key, 'srchDisplay');
+  setDisplay(key, 'srchDisplayFull');
   outPos.innerText = '' + (pos + 1) + 
                      '. ' + key;
   
@@ -578,6 +589,20 @@ function quickExit(save = true) { // Exit Quick Tag Editing View
   
   let qTags = document.querySelector('#greyout > #tags > textarea');
   document.getElementById('editTags').value = qTags.value;
+  
+}
+
+function fullScreen(id) {
+  
+  document.getElementById(id).style.display = 'block'; // Show
+  
+}
+
+function fullScreenExit() {
+  
+  for(const id of fullScreenIDs) { // Each id
+    document.getElementById(id).style.display = 'none'; // Hide
+  }
   
 }
 
@@ -1033,10 +1058,10 @@ document.addEventListener('keydown', function() {
 
 // Theme
 
-let sheet = new CSSStyleSheet();
-document.adoptedStyleSheets.push(sheet);
+let themeSheet = new CSSStyleSheet();
+document.adoptedStyleSheets.push(themeSheet);
 
-let styleSheetStrings = {
+let themeStyleSheetStrings = {
   'dark': `
 body {
   color: rgb(255, 255, 255);
@@ -1072,8 +1097,8 @@ function updateTheme() {
   
   let theme = localStorage.getItem('theme');
   
-  sheet.replace(
-    styleSheetStrings[theme]
+  themeSheet.replace(
+    themeStyleSheetStrings[theme]
   );
   
 }
@@ -1082,7 +1107,7 @@ function nextTheme(add) {
   
   // Variables
   
-  let themeKeys = Object.keys(styleSheetStrings);
+  let themeKeys = Object.keys(themeStyleSheetStrings);
   
   let currentTheme = localStorage.getItem('theme');
   let currentPos = themeKeys.indexOf(currentTheme);
@@ -1094,7 +1119,15 @@ function nextTheme(add) {
   
   currentPos = (currentPos + add) % themeKeys.length;
   
-  localStorage.setItem('theme', themeKeys[currentPos]);
+  try {
+    localStorage.setItem('theme', themeKeys[currentPos]);
+    themeButton.innerText = '◪';
+  }
+  catch {
+    themeButton.innerText = '⚠️';
+    themeButton.title = 'localStorage Quota Full!';
+    return
+  }
   
   updateTheme();
   
@@ -1112,10 +1145,6 @@ function nextTheme(add) {
   }
   
   themeButton.title = titleStr;
-  
-  // Output Storage
-  
-  outUsage();
   
 }
 
