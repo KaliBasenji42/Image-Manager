@@ -10,6 +10,8 @@ let currentSrchPos = -1; // Index of output for search
 
 let imgPath = ''; // Image path for Quick Tag Editing
 
+let quickAllSetTags;
+
 let fullScreenIDs = [
   'pathImgFull',
   'srchImgFull',
@@ -544,9 +546,11 @@ function quickLoad() { // Load Quick Tag Editing View
   
   document.querySelector('#greyout > #list > div').innerHTML = '<span style="text-align: center;">Waiting for Reload</span>'
   
+  quickListTags(true);
+  
 }
 
-function quickListTags() { // List all Tags for Quick Tag Editing View
+async function quickListTags(hard = false) { // List all Tags for Quick Tag Editing View
   
   // Variables
   
@@ -555,15 +559,23 @@ function quickListTags() { // List all Tags for Quick Tag Editing View
   let tagsSet = new Set;
   let tagsArr = [];
   
-  let savedTags = []
+  let savedTags = [];
   let textareaTags = tagsElem.value.split(' ').filter(item => item !== '');
   
   if(allSet[imgPath]) savedTags = allSet[imgPath]['tags'];
   
   // Set (to Prevent Duplicates)
   
-  for(const item in allSet) {
-    for(const tag of allSet[item].tags) tagsSet.add(tag);
+  if(hard) { // Get every tag in allSet (laggy)
+    console.log('Quick Tag Reload - Hard')
+    for(const item in allSet) {
+      for(const tag of allSet[item].tags) tagsSet.add(tag);
+    }
+    quickAllSetTags = tagsSet;
+  }
+  else { // Fast
+    console.log('Quick Tag Reload - Fast')
+    tagsSet = quickAllSetTags;
   }
   
   for(const tag of textareaTags) tagsSet.add(tag);

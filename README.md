@@ -22,6 +22,11 @@ HTML File that accesses/edits a JSON file that tags and organizes images/media.
 
 ## Instructions
 
+> The example images used are screenshots from videos by [MrGreenGuy](https://www.youtube.com/@mrgreenguy).  
+> They were just random images I had on hand :3.  
+
+> (The example images are lavender because they where taken before I added a better theme function)  
+
 ### 1. Move in Media Directory
 
 Copy/Move the directory of media you want to organize in place of the *<code>image</code>* example folder.  
@@ -55,6 +60,8 @@ Load the sub-directory, *<code>images</code>* for example:
 > Warning: Mobile browsers may struggle with large folders.  
 > A solution I found was to store all your media in a separate folder (<code>images-all</code>) and have the main folder (<code>images</code>) only be a few files. And when going to search, rename the large folder to the main folder (<code>images-all</code> --> <code>images</code>).  
 
+I have since added an alternate option that just has one enter the file path or URL to each media file, separated by line breaks. This works much better for mobile (especial if you have Termux and can run something like `find images/ -type f`).  
+
 ### 5. Input Navigation
 
 Navigate through the images using the list:  
@@ -74,7 +81,7 @@ Things like the path and date will load from file data:
 Update the form inputs to match what you want:  
 ![editItem](assets/README/editItem.png)  
 
-> You can also set the "src" to an URL to the image.  
+> You can also set the "src" to the URL of the image.  
 
 Press "Add" to add media file's data to <code>allSet</code>, or "Overwrite" to overwrite a media file's data already in <code>allSet</code>.  
 
