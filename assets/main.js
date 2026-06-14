@@ -8,7 +8,7 @@ let files = []; // Files in folder
 let currentPathPos = -1; // Index of files in folder for edit
 let currentSrchPos = -1; // Index of output for search
 
-let quickImgPath = ''; // Image path for Quick Tag Editing
+let imgPath = ''; // Image path for Quick Tag Editing
 
 let fullScreenIDs = [
   'pathImgFull',
@@ -248,10 +248,19 @@ function setImagePath(pos, last = false) { // Select image for editing
   
   currentPathPos = pos;
   
+  // Fullscreen If
+  
+  if(document.getElementById('pathImgFull').style.display == 'block') {
+    setDisplay(files[pos].path, 'pathDisplayFull');
+    setDisplay('', 'pathDisplay');
+  }
+  else {
+    setDisplay(files[pos].path, 'pathDisplay');
+    setDisplay('', 'pathDisplayFull');
+  }
+  
   // Set
   
-  setDisplay(files[pos].path, 'pathDisplay');
-  setDisplay(files[pos].path, 'pathDisplayFull');
   outPos.innerText = '' + (pos + 1) + 
                      '. ' + files[pos].path;
   
@@ -307,10 +316,19 @@ function setImageSrch(pos, last = false) { // Select image for search
   
   let key = outputArr[pos];
   
+  // Fullscreen If
+  
+  if(document.getElementById('srchImgFull').style.display == 'block') {
+    setDisplay(key, 'srchDisplayFull');
+    setDisplay('', 'srchDisplay');
+  }
+  else {
+    setDisplay(key, 'srchDisplay');
+    setDisplay('', 'srchDisplayFull');
+  }
+  
   // Set
   
-  setDisplay(key, 'srchDisplay');
-  setDisplay(key, 'srchDisplayFull');
   outPos.innerText = '' + (pos + 1) + 
                      '. ' + key;
   
@@ -449,7 +467,7 @@ function setDisplay(src, id) { // Set the .src property of an elem.
   
   // Quick Tagging View
   
-  if(id == 'pathDisplay') quickImgPath = src;
+  if(id == 'pathDisplay') imgPath = src;
   
 }
 
@@ -515,7 +533,7 @@ function quickLoad() { // Load Quick Tag Editing View
   
   // Load image
   
-  setDisplay(quickImgPath, 'quickDisplay');
+  setDisplay(imgPath, 'quickDisplay');
   
   // Load tags
   
@@ -540,7 +558,7 @@ function quickListTags() { // List all Tags for Quick Tag Editing View
   let savedTags = []
   let textareaTags = tagsElem.value.split(' ').filter(item => item !== '');
   
-  if(allSet[quickImgPath]) savedTags = allSet[quickImgPath]['tags'];
+  if(allSet[imgPath]) savedTags = allSet[imgPath]['tags'];
   
   // Set (to Prevent Duplicates)
   

@@ -26,7 +26,7 @@
       <button onclick="quickExit(false)">Exit (Don't Save)</button><br><br>
       <button onclick="quickListTags()">Reload All Tags List</button><br><br>
       <button onclick="setDisplay('', 'quickDisplay')">Clear Image</button><br><br>
-      <button onclick="setDisplay(quickImgPath, 'quickDisplay')">Reload Image</button>
+      <button onclick="setDisplay(imgPath, 'quickDisplay')">Reload Image</button>
     </div></div>
     <div id="tags"><textarea></textarea></div>
   </div>
@@ -96,14 +96,14 @@ images/folder/file2.jpg</textarea><br>
   <button class="marginBttn" onclick="setDisplay('', 'pathDisplay')">Clear Image</button><br><br>
   
   <div class="imgCont" id="pathImgCont">
-    <iframe id="pathDisplay"></iframe>
+    <iframe id="pathDisplay" allow="picture-in-picture; fullscreen" allowfullscreen></iframe>
   </div><br>
   
   <div id="pathImgFull">
     <iframe id="pathDisplayFull"></iframe>
     <button class="lFullBttn" onclick="setImagePath(currentPathPos - 1)"><</button>
     <button class="rFullBttn" onclick="setImagePath(currentPathPos + 1)">></button>
-    <button class="xFullBttn" onclick="fullScreenExit()">Exit</button>
+    <button class="xFullBttn" onclick="fullScreenExit();setImagePath(currentPathPos)">Exit</button>
   </div>
   
   <div id="pathOutPos">#. ___</div><br>
@@ -115,7 +115,7 @@ images/folder/file2.jpg</textarea><br>
   <label for="pathBindArrows">Bind to arrow keys?</label>
   <input type="checkbox" id="pathBindArrows" name="pathBindArrows"><br><br>
   
-  <button class="marginBttn" onclick="fullScreen('pathImgFull')">Full Screen</button>
+  <button class="marginBttn" onclick="fullScreen('pathImgFull');setImagePath(currentPathPos)">Full Screen</button>
   
   <h3>Edit Item</h3>
   
@@ -245,7 +245,7 @@ images/folder/file2.jpg</textarea><br>
     <iframe id="srchDisplayFull"></iframe>
     <button class="lFullBttn" onclick="setImageSrch(currentSrchPos - 1)"><</button>
     <button class="rFullBttn" onclick="setImageSrch(currentSrchPos + 1)">></button>
-    <button class="xFullBttn" onclick="fullScreenExit()">Exit</button>
+    <button class="xFullBttn" onclick="fullScreenExit();setImageSrch(currentSrchPos)">Exit</button>
   </div>
   
   <div id="srchOutPos">#. ___</div><br>
@@ -257,7 +257,7 @@ images/folder/file2.jpg</textarea><br>
   <label for="srchBindArrows">Bind to arrow keys?</label>
   <input type="checkbox" id="srchBindArrows" name="srchBindArrows"><br><br>
   
-  <button class="marginBttn" onclick="fullScreen('srchImgFull')">Full Screen</button><br><br>
+  <button class="marginBttn" onclick="fullScreen('srchImgFull');setImageSrch(currentSrchPos)">Full Screen</button><br><br>
   
   <div id="srchOutInfo">
     Page:<br><br>
