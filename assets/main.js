@@ -592,10 +592,10 @@ function quickListTags() { // List all Tags for Quick Tag Editing View
     
     // Add to HTMLStr
     
-    HTMLStr += '<span title="Not Listed">❌❌</span>';
     if(inSaved && inTextarea) HTMLStr += '<span title="Listed in Both">✅☑️</span>';
     else if(inSaved && !inTextarea) HTMLStr += '<span title="Only in Saved">✅❌</span>';
     else if(!inSaved && inTextarea) HTMLStr += '<span title="Only in Textarea">❌☑️</span>';
+    else HTMLStr += '<span title="Not Listed">❌❌</span>';
     
     HTMLStr += tag + '<br>';
     
