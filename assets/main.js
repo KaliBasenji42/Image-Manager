@@ -10,8 +10,6 @@ let currentSrchPos = -1; // Index of output for search
 
 let imgPath = ''; // Image path for Quick Tag Editing
 
-let quickAllSetTags;
-
 let fullScreenIDs = [
   'pathImgFull',
   'srchImgFull',
@@ -520,12 +518,15 @@ function listTags(clear = false) {
   
   // Output
   
-  listElem.innerHTML = '<tr><th>#</th><th>Tag</th></tr>'; // Clear
+  listElem.innerHTML = ''; // Clear
+  let HTMLStr = '<tr><th>#</th><th>Tag</th></tr>';
   
   for(const tag of tagsArr) {
-    if(tagsObj[tag] == 1) listElem.innerHTML += '<tr><td id="lowTag">' + tagsObj[tag] + '</td><td>' + tag + '</td></tr>';
-    else listElem.innerHTML += '<tr><td>' + tagsObj[tag] + '</td><td>' + tag + '</td></tr>';
+    if(tagsObj[tag] == 1) HTMLStr += '<tr><td id="lowTag">' + tagsObj[tag] + '</td><td>' + tag + '</td></tr>';
+    else HTMLStr += '<tr><td>' + tagsObj[tag] + '</td><td>' + tag + '</td></tr>';
   }
+  
+  listElem.innerHTML = HTMLStr; // Set
   
 }
 
@@ -544,13 +545,13 @@ function quickLoad() { // Load Quick Tag Editing View
   
   // Load All Tags List
   
-  document.querySelector('#greyout > #list > div').innerHTML = '<span style="text-align: center;">Waiting for Reload</span>'
+  document.querySelector('#greyout > #list > div').innerHTML = '<span style="text-align: center;">Loading...</span>'
   
-  quickListTags(true);
+  quickListTags();
   
 }
 
-async function quickListTags(hard = false) { // List all Tags for Quick Tag Editing View
+function quickListTags() { // List all Tags for Quick Tag Editing View
   
   // Variables
   
@@ -566,16 +567,8 @@ async function quickListTags(hard = false) { // List all Tags for Quick Tag Edit
   
   // Set (to Prevent Duplicates)
   
-  if(hard) { // Get every tag in allSet (laggy)
-    console.log('Quick Tag Reload - Hard')
-    for(const item in allSet) {
-      for(const tag of allSet[item].tags) tagsSet.add(tag);
-    }
-    quickAllSetTags = tagsSet;
-  }
-  else { // Fast
-    console.log('Quick Tag Reload - Fast')
-    tagsSet = quickAllSetTags;
+  for(const item in allSet) {
+    for(const tag of allSet[item].tags) tagsSet.add(tag);
   }
   
   for(const tag of textareaTags) tagsSet.add(tag);
@@ -587,7 +580,8 @@ async function quickListTags(hard = false) { // List all Tags for Quick Tag Edit
   
   // Output
   
-  listElem.innerText = ''; // Clear
+  listElem.innerHTML = ''; // Clear
+  let HTMLStr = '';
   
   for(const tag of tagsArr) {
     
@@ -596,13 +590,18 @@ async function quickListTags(hard = false) { // List all Tags for Quick Tag Edit
     let inSaved = savedTags.includes(tag);
     let inTextarea = textareaTags.includes(tag);
     
-    let overlapHTML = '<span title="Not Listed">❌❌</span>';
-    if(inSaved && inTextarea) overlapHTML = '<span title="Listed in Both">✅☑️</span>';
-    else if(inSaved && !inTextarea) overlapHTML = '<span title="Only in Saved">✅❌</span>';
-    else if(!inSaved && inTextarea) overlapHTML = '<span title="Only in Textarea">❌☑️</span>';
+    // Add to HTMLStr
     
-    listElem.innerHTML += overlapHTML + tag + '<br>';
+    HTMLStr += '<span title="Not Listed">❌❌</span>';
+    if(inSaved && inTextarea) HTMLStr += '<span title="Listed in Both">✅☑️</span>';
+    else if(inSaved && !inTextarea) HTMLStr += '<span title="Only in Saved">✅❌</span>';
+    else if(!inSaved && inTextarea) HTMLStr += '<span title="Only in Textarea">❌☑️</span>';
+    
+    HTMLStr += tag + '<br>';
+    
   }
+  
+  listElem.innerHTML = HTMLStr; // Set
   
 }
 
